@@ -4,28 +4,53 @@ Spring Boot microservice for the Campus Hub nutrition department.
 
 ## Prerequisites
 
-- Java 21
-- Maven
-- Docker Desktop
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
-## Database Setup
+## Running (Docker Compose — recommended)
 
-Run the following command to start the MySQL database in Docker:
+Starts both the Spring Boot app and a MySQL 8 database:
 
 ```bash
-docker run --name nutrition-mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=nutrition_db -p 3307:3306 -d mysql:8.0
+docker compose up --build
 ```
 
-This creates a MySQL 8.0 container with:
-- **Port:** `3307` (host) → `3306` (container)
-- **Database:** `nutrition_db`
-- **Username:** `root`
-- **Password:** `root`
+- App: http://localhost:8080
+- MySQL: `localhost:3307` (user: `root`, password: `root`, db: `nutrition_db`)
 
-> MySQL takes a few seconds to initialize on first boot. If the app fails to connect immediately, wait ~10 seconds and retry.
+Database data is persisted in a Docker volume — it survives container restarts.
 
-## Running the App
+## Running locally (without Docker)
+
+Requires Java 21, Maven, and a local MySQL instance on port `3307`.
 
 ```bash
-mvn spring-boot:run
+./mvnw spring-boot:run
+```
+
+## Daily development workflow
+
+The recommended approach during active coding — DB runs in Docker, app runs in the IDE:
+
+**1. Start only the database** (once per session):
+```bash
+docker compose up -d nutrition-db
+```
+
+**2. Run the app** from VS Code / IntelliJ — hit the ▶ Run button on `NutritionDepartmentApplication`.
+
+**3. Make a change** → stop (⏹) → run again (▶). Hibernate auto-applies schema changes on startup.
+
+**4. Test endpoints** with Postman at `http://localhost:8080`.
+
+**5. Inspect the DB** in MySQL Workbench: connect to `localhost:3307`, user `root`, password `root`.
+
+> `spring-boot-devtools` is included — it hot-reloads simple changes (service logic etc.) without a full restart. Model/repo changes still require a restart.
+
+## Common commands
+
+```bash
+docker compose up --build -d   # build + start in background
+docker compose down             # stop & remove containers
+docker compose logs -f          # follow live logs
+docker compose logs -f nutrition-app  # app logs only
 ```
