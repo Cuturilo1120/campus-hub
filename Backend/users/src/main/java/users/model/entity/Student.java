@@ -1,11 +1,9 @@
-package dorm.model.entity;
+package users.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Entity
 @Data
@@ -29,11 +27,5 @@ public class Student {
     private StudyStatus status;
 
     private String city;
-
-    @OneToMany(mappedBy = "student")
-    private List<DormStay> dormStayList;
-
-    @OneToMany(mappedBy = "student")
-    private List<RoomApplication> roomApplicationList;
 
 }

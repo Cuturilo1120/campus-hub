@@ -23,13 +23,11 @@ public class RoomApplication {
     @Enumerated(EnumType.STRING)
     private ApplicationStatus status;
 
-    @ManyToOne
-    private Student student;
+    private Long studentId;
 
     @ManyToOne
     private Dorm dorm;
 
-    @ManyToOne
-    private Employee employee;
+    private Long employeeId;
 
 }

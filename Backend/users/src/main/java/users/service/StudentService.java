@@ -1,10 +1,10 @@
-package dorm.service;
+package users.service;
 
-import dorm.model.entity.Student;
-import dorm.repository.StudentRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import users.model.entity.Student;
+import users.repository.StudentRepository;
 
 import java.util.List;
 

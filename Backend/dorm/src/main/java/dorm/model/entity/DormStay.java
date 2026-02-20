@@ -26,13 +26,11 @@ public class DormStay {
     @Enumerated(EnumType.STRING)
     private StayStatus stayStatus;
 
-    @ManyToOne
-    private Student student;
+    private Long studentId;
 
     @ManyToOne
     private Room room;
 
-    @ManyToOne
-    private Employee employee;
+    private Long emplyeeId;
 
 }

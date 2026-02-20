@@ -1,10 +1,10 @@
-package dorm.controller;
+package users.controller;
 
-import dorm.model.entity.Student;
-import dorm.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import users.model.entity.Student;
+import users.service.StudentService;
 
 import java.util.List;
 
