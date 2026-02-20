@@ -21,13 +21,8 @@ public class Card {
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @ManyToOne
-    @JoinColumn(name = "cashier_id")
-    private Cashier cashier;
-
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
     private List<Meal> meals;
-
 
     public Long getId() {
         return id;
@@ -59,14 +54,6 @@ public class Card {
 
     public void setStudent(Student student) {
         this.student = student;
-    }
-
-    public Cashier getCashier() {
-        return cashier;
-    }
-
-    public void setCashier(Cashier cashier) {
-        this.cashier = cashier;
     }
 
     public List<Meal> getMeals() {
