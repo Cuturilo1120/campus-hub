@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>nutritionDepartment</artifactId>
+	<artifactId>users</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>nutritionDepartment</name>
+	<name>users</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -58,11 +58,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 
