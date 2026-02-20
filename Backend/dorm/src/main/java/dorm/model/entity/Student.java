@@ -23,7 +23,7 @@ public class Student {
 
     private String indexNumber;
 
-    private String FacultyName;
+    private String facultyName;
 
     @Enumerated(EnumType.STRING)
     private StudyStatus status;

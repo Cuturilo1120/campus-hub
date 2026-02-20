@@ -24,7 +24,7 @@ public class Pavilion {
     private String address;
 
     @ManyToOne
-    private Dorm dom;
+    private Dorm dorm;
 
     @OneToMany(mappedBy = "pavilion")
     private List<Room> roomList;
