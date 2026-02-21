@@ -44,7 +44,7 @@ public class AuthService {
         return new AuthResponse(token, request.username(), role);
     }
 
-    public AuthResponse register(RegisterRequest request) {
+    public void register(RegisterRequest request) {
         if (employeeRepository.findByUsername(request.username()).isPresent()) {
             throw new IllegalArgumentException("Username already taken: " + request.username());
         }
@@ -55,9 +55,5 @@ public class AuthService {
         employee.setPassword(passwordEncoder.encode(request.password()));
         employee.setRole(request.role());
         employeeRepository.save(employee);
-
-        UserDetails userDetails = employeeService.loadUserByUsername(request.username());
-        String token = jwtUtil.generateToken(userDetails);
-        return new AuthResponse(token, request.username(), request.role().name());
     }
 }

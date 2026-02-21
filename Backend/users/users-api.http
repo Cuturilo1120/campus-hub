@@ -1,0 +1,111 @@
+### =============================================
+### AUTH
+### =============================================
+
+### Login (sets @authToken for all requests below)
+# @name login
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "password"
+}
+
+@authToken = {{login.response.body.token}}
+
+###
+
+### Register new employee (requires ADMIN token)
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "username": "john.doe",
+  "password": "password123",
+  "role": "CASHIER"
+}
+
+###
+
+### Logout
+POST http://localhost:8080/api/auth/logout
+Authorization: Bearer {{authToken}}
+
+
+
+### =============================================
+### EMPLOYEES
+### =============================================
+
+### Get all employees
+GET http://localhost:8080/api/employees
+Authorization: Bearer {{authToken}}
+
+###
+
+### Get employee by ID
+GET http://localhost:8080/api/employees/1
+Authorization: Bearer {{authToken}}
+
+###
+
+### Create employee directly (bypasses auth registration flow)
+POST http://localhost:8080/api/employees
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "firstName": "Jane",
+  "lastName": "Smith",
+  "username": "jane.smith",
+  "password": "password123",
+  "role": "COOK"
+}
+
+###
+
+### Delete employee by ID
+DELETE http://localhost:8080/api/employees/1
+Authorization: Bearer {{authToken}}
+
+
+
+### =============================================
+### STUDENTS
+### =============================================
+
+### Get all students
+GET http://localhost:8080/api/students
+Authorization: Bearer {{authToken}}
+
+###
+
+### Get student by ID
+GET http://localhost:8080/api/students/1
+Authorization: Bearer {{authToken}}
+
+###
+
+### Create student
+POST http://localhost:8080/api/students
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "firstName": "Marko",
+  "lastName": "Markovic",
+  "indexNumber": "2021/0123",
+  "facultyName": "Faculty of Engineering",
+  "status": "BUDGET",
+  "city": "Novi Sad"
+}
+
+###
+
+### Delete student by ID
+DELETE http://localhost:8080/api/students/1
+Authorization: Bearer {{authToken}}
