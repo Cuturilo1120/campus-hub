@@ -28,4 +28,8 @@ public class Student {
 
     private String city;
 
+    private String username;
+
+    private String password;
+
 }

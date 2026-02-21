@@ -1,8 +1,8 @@
 ### =============================================
-### AUTH
+### AUTH - EMPLOYEE
 ### =============================================
 
-### Login (sets authToken global for all requests below)
+### Login as employee (sets authToken)
 POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
@@ -38,6 +38,54 @@ Authorization: Bearer {{authToken}}
 
 > {%
   client.global.clear("authToken");
+%}
+
+
+
+### =============================================
+### AUTH - STUDENT
+### =============================================
+
+
+### Register new student (requires CASHIER or PRINCIPAL token)
+POST http://localhost:8080/api/auth/students/register
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "firstName": "Marko",
+  "lastName": "Markovic",
+  "username": "marko.markovic",
+  "password": "student123",
+  "indexNumber": "2021/0123",
+  "facultyName": "Faculty of Engineering",
+  "status": "BUDGET",
+  "city": "Novi Sad"
+}
+
+###
+
+### Login as student (sets studentToken)
+POST http://localhost:8080/api/auth/students/login
+Content-Type: application/json
+
+{
+  "username": "marko.markovic",
+  "password": "student123"
+}
+
+> {%
+  client.global.set("studentToken", response.body.token);
+%}
+
+###
+
+### Student logout
+POST http://localhost:8080/api/auth/logout
+Authorization: Bearer {{studentToken}}
+
+> {%
+  client.global.clear("studentToken");
 %}
 
 
