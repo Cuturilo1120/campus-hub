@@ -1,0 +1,64 @@
+### =============================================
+### MENU
+### =============================================
+
+### Get menu (public — no auth required)
+GET http://localhost:8080/api/menu
+
+###
+
+### =============================================
+### SETUP — Login as cook (sets cookToken)
+### =============================================
+
+### Login as cook
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "bart.smith",
+  "password": "password123"
+}
+
+> {%
+  client.global.set("cookToken", response.body.token);
+%}
+
+
+
+### =============================================
+### UPDATE MENU
+### =============================================
+
+### Update all prices (requires COOK or ADMIN token)
+PATCH http://localhost:8080/api/menu
+Content-Type: application/json
+Authorization: Bearer {{cookToken}}
+
+{
+  "breakfastPrice": 2.50,
+  "lunchPrice": 5.00,
+  "dinnerPrice": 3.50
+}
+
+###
+
+### Update a single price (requires COOK or ADMIN token)
+PATCH http://localhost:8080/api/menu
+Content-Type: application/json
+Authorization: Bearer {{cookToken}}
+
+{
+  "lunchPrice": 4.50
+}
+
+###
+
+### Update menu — as student, not cook (expects 403)
+PATCH http://localhost:8080/api/menu
+Content-Type: application/json
+Authorization: Bearer {{cookToken}}
+
+{
+  "breakfastPrice": 1.00
+}

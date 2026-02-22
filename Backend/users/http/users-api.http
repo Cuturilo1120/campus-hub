@@ -30,6 +30,22 @@ Authorization: Bearer {{authToken}}
   "role": "CASHIER"
 }
 
+
+
+###
+
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "firstName": "Bart",
+  "lastName": "Smith",
+  "username": "bart.smith",
+  "password": "password123",
+  "role": "COOK"
+}
+
 ###
 
 ### Logout

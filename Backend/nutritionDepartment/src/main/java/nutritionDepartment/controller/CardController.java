@@ -1,7 +1,9 @@
 package nutritionDepartment.controller;
 
+import nutritionDepartment.model.dto.BuyMealRequest;
 import nutritionDepartment.model.dto.CardRequest;
 import nutritionDepartment.model.dto.CardResponse;
+import nutritionDepartment.model.dto.FundsRequest;
 import nutritionDepartment.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,31 @@ public class CardController {
     @GetMapping("/{id}")
     public CardResponse getOne(@PathVariable Long id) {
         return cardService.getCardById(id);
+    }
+
+    @PatchMapping("/{id}/renew")
+    public CardResponse renew(@PathVariable Long id) {
+        return cardService.renewExpiration(id);
+    }
+
+    @PatchMapping("/{id}/funds")
+    public CardResponse addFunds(@PathVariable Long id, @RequestBody FundsRequest request) {
+        return cardService.addFunds(id, request);
+    }
+
+    @GetMapping("/student/{studentId}")
+    public CardResponse getByStudentId(@PathVariable Long studentId) {
+        return cardService.getCardByStudentId(studentId);
+    }
+
+    @PostMapping("/student/{studentId}/buy")
+    public CardResponse buyMeal(@PathVariable Long studentId, @RequestBody BuyMealRequest request) {
+        return cardService.buyMeal(studentId, request);
+    }
+
+    @PatchMapping("/{id}/meals/consume")
+    public CardResponse consumeMeal(@PathVariable Long id, @RequestBody BuyMealRequest request) {
+        return cardService.consumeMeal(id, request);
     }
 
     @DeleteMapping("/{id}")

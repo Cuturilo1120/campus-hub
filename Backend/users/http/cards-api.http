@@ -22,32 +22,18 @@ Content-Type: application/json
 ### =============================================
 
 ### Create card for student (requires CASHIER token)
+### Balance defaults to 0, expiration date defaults to one year from now
 POST http://localhost:8080/api/cards
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-  "studentId": 1,
-  "balance": 5000.00,
-  "expirationDate": "2026-12-31"
+  "studentId": 1
 }
 
 > {%
   client.global.set("cardId", response.body.id);
 %}
-
-###
-
-### Create card — duplicate student (expects 400)
-POST http://localhost:8080/api/cards
-Content-Type: application/json
-Authorization: Bearer {{authToken}}
-
-{
-  "studentId": 1,
-  "balance": 3000.00,
-  "expirationDate": "2026-12-31"
-}
 
 ###
 
@@ -57,9 +43,7 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-  "studentId": 9999,
-  "balance": 3000.00,
-  "expirationDate": "2026-12-31"
+  "studentId": 9999
 }
 
 ###
@@ -91,3 +75,204 @@ Authorization: Bearer {{authToken}}
 ### Delete card — non-existent (expects 404)
 DELETE http://localhost:8080/api/cards/9999
 Authorization: Bearer {{authToken}}
+
+###
+
+### Renew card expiration by one year (requires CASHIER token)
+PATCH http://localhost:8080/api/cards/{{cardId}}/renew
+Authorization: Bearer {{authToken}}
+
+###
+
+### Renew card — non-existent (expects 404)
+PATCH http://localhost:8080/api/cards/9999/renew
+Authorization: Bearer {{authToken}}
+
+###
+
+### Add funds to card (requires CASHIER token)
+PATCH http://localhost:8080/api/cards/{{cardId}}/funds
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "amount": 1500.00
+}
+
+###
+
+### Add funds — zero amount (expects 400)
+PATCH http://localhost:8080/api/cards/{{cardId}}/funds
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "amount": 0
+}
+
+###
+
+### Add funds — non-existent card (expects 404)
+PATCH http://localhost:8080/api/cards/9999/funds
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "amount": 500.00
+}
+
+###
+
+
+
+### =============================================
+### SETUP — Login as student (sets studentToken)
+### =============================================
+
+### Login as student
+POST http://localhost:8080/api/auth/students/login
+Content-Type: application/json
+
+{
+  "username": "marko.markovic",
+  "password": "student123"
+}
+
+> {%
+  client.global.set("studentToken", response.body.token);
+%}
+
+
+
+### =============================================
+### MY CARD (STUDENT)
+### =============================================
+
+### Get my card (requires STUDENT token)
+GET http://localhost:8080/api/cards/mine
+Authorization: Bearer {{studentToken}}
+
+###
+
+### Get my card — no card yet (expects 200 with message)
+GET http://localhost:8080/api/cards/mine
+Authorization: Bearer {{studentToken}}
+
+###
+
+
+
+### =============================================
+### MEALS
+### =============================================
+
+### Buy a meal (requires STUDENT token)
+POST http://localhost:8080/api/meals/buy
+Content-Type: application/json
+Authorization: Bearer {{studentToken}}
+
+{
+  "mealType": "BREAKFAST"
+}
+
+###
+
+### Buy a meal — insufficient balance (expects 400)
+POST http://localhost:8080/api/meals/buy
+Content-Type: application/json
+Authorization: Bearer {{studentToken}}
+
+{
+  "mealType": "LUNCH"
+}
+
+###
+
+### Buy a meal — invalid meal type (expects 400)
+POST http://localhost:8080/api/meals/buy
+Content-Type: application/json
+Authorization: Bearer {{studentToken}}
+
+{
+  "mealType": "INVALID"
+}
+
+###
+
+### Buy a meal — as cashier, not student (expects 403)
+POST http://localhost:8080/api/meals/buy
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "mealType": "DINNER"
+}
+
+###
+
+
+
+### =============================================
+### SETUP — Login as cook (sets cookToken)
+### =============================================
+
+### Login as cook
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "bart.smith",
+  "password": "password123"
+}
+
+> {%
+  client.global.set("cookToken", response.body.token);
+%}
+
+
+
+### =============================================
+### CONSUME MEAL (COOK)
+### =============================================
+
+### Consume a meal from a card (requires COOK token)
+PATCH http://localhost:8080/api/meals/{{cardId}}/consume
+Content-Type: application/json
+Authorization: Bearer {{cookToken}}
+
+{
+  "mealType": "BREAKFAST"
+}
+
+###
+
+### Consume a meal — no remaining meals of that type (expects 400)
+PATCH http://localhost:8080/api/meals/{{cardId}}/consume
+Content-Type: application/json
+Authorization: Bearer {{cookToken}}
+
+{
+  "mealType": "DINNER"
+}
+
+###
+
+### Consume a meal — non-existent card (expects 404)
+PATCH http://localhost:8080/api/meals/9999/consume
+Content-Type: application/json
+Authorization: Bearer {{cookToken}}
+
+{
+  "mealType": "LUNCH"
+}
+
+###
+
+### Consume a meal — as student, not cook (expects 403)
+PATCH http://localhost:8080/api/meals/{{cardId}}/consume
+Content-Type: application/json
+Authorization: Bearer {{studentToken}}
+
+{
+  "mealType": "BREAKFAST"
+}

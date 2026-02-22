@@ -9,18 +9,18 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"card_id", "meal_type"}))
 public class Meal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int mealNumber;
+    private int amount;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "meal_type")
     private MealType mealType;
-
-    private Double price;
 
     @ManyToOne
     @JoinColumn(name = "card_id")

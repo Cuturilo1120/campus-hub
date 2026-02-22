@@ -6,6 +6,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import users.model.dto.CardRequest;
 import users.model.dto.CardResponse;
+import users.model.dto.CardStatusResponse;
+import users.model.dto.FundsRequest;
 import users.service.CardService;
 
 import java.util.List;
@@ -32,6 +34,24 @@ public class CardController {
     @GetMapping("/{id}")
     public CardResponse getOne(@PathVariable Long id) {
         return cardService.getCardById(id);
+    }
+
+    @PatchMapping("/{id}/renew")
+    @PreAuthorize("hasRole('CASHIER')")
+    public CardResponse renew(@PathVariable Long id) {
+        return cardService.renewCard(id);
+    }
+
+    @GetMapping("/mine")
+    @PreAuthorize("hasRole('STUDENT')")
+    public CardStatusResponse getMyCard() {
+        return cardService.getMyCard();
+    }
+
+    @PatchMapping("/{id}/funds")
+    @PreAuthorize("hasRole('CASHIER') or hasRole('STUDENT')")
+    public CardResponse addFunds(@PathVariable Long id, @RequestBody FundsRequest request) {
+        return cardService.addFunds(id, request);
     }
 
     @DeleteMapping("/{id}")
