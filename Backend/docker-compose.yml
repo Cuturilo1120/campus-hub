@@ -4,17 +4,6 @@ services:
 
   # ───────────── DATABASES ─────────────
 
-  nutrition-db:
-    image: mysql:8.0
-    container_name: nutrition-db
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: nutrition_db
-    ports:
-      - "3307:3306"
-    volumes:
-      - nutrition_db_data:/var/lib/mysql
-
   users-db:
     image: mysql:8.0
     container_name: users-db
@@ -22,7 +11,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: users_db
     ports:
-      - "3308:3306"
+      - "3307:3306"
     volumes:
       - users_db_data:/var/lib/mysql
 
@@ -33,23 +22,23 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: dorm_db
     ports:
-      - "3309:3306"
+      - "3308:3306"
     volumes:
       - dorm_db_data:/var/lib/mysql
 
+  nutrition-db:
+    image: mysql:8.0
+    container_name: nutrition-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: nutrition_db
+    ports:
+      - "3309:3306"
+    volumes:
+      - nutrition_db_data:/var/lib/mysql
+
 
   # ───────────── APPLICATIONS ─────────────
-
-  nutrition-app:
-    build: ./nutritionDepartment
-    ports:
-      - "8082:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://nutrition-db:3306/nutrition_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
-    depends_on:
-      - nutrition-db
 
   users-app:
     build: ./users
@@ -59,21 +48,35 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://users-db:3306/users_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
+      NUTRITION_SERVICE_URL: http://nutrition-app:8082
     depends_on:
       - users-db
 
   dorm-app:
     build: ./dorm
     ports:
-      - "8081:8080"
+      - "8081:8081"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://dorm-db:3306/dorm_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
+      SERVER_PORT: 8081
     depends_on:
       - dorm-db
 
+  nutrition-app:
+    build: ./nutritionDepartment
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://nutrition-db:3306/nutrition_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SERVER_PORT: 8082
+    depends_on:
+      - nutrition-db
+
 volumes:
-  nutrition_db_data:
   users_db_data:
   dorm_db_data:
+  nutrition_db_data:

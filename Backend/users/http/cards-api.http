@@ -1,0 +1,93 @@
+### =============================================
+### SETUP — Login as cashier (sets authToken)
+### =============================================
+
+### Login as cashier
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "jake.park",
+  "password": "password123"
+}
+
+> {%
+  client.global.set("authToken", response.body.token);
+%}
+
+
+
+### =============================================
+### CARDS
+### =============================================
+
+### Create card for student (requires CASHIER token)
+POST http://localhost:8080/api/cards
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "studentId": 1,
+  "balance": 5000.00,
+  "expirationDate": "2026-12-31"
+}
+
+> {%
+  client.global.set("cardId", response.body.id);
+%}
+
+###
+
+### Create card — duplicate student (expects 400)
+POST http://localhost:8080/api/cards
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "studentId": 1,
+  "balance": 3000.00,
+  "expirationDate": "2026-12-31"
+}
+
+###
+
+### Create card — non-existent student (expects 404)
+POST http://localhost:8080/api/cards
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "studentId": 9999,
+  "balance": 3000.00,
+  "expirationDate": "2026-12-31"
+}
+
+###
+
+### Get all cards
+GET http://localhost:8080/api/cards
+Authorization: Bearer {{authToken}}
+
+###
+
+### Get card by ID
+GET http://localhost:8080/api/cards/{{cardId}}
+Authorization: Bearer {{authToken}}
+
+###
+
+### Get card — non-existent (expects 404)
+GET http://localhost:8080/api/cards/9999
+Authorization: Bearer {{authToken}}
+
+###
+
+### Delete card by ID (requires CASHIER token)
+DELETE http://localhost:8080/api/cards/{{cardId}}
+Authorization: Bearer {{authToken}}
+
+###
+
+### Delete card — non-existent (expects 404)
+DELETE http://localhost:8080/api/cards/9999
+Authorization: Bearer {{authToken}}

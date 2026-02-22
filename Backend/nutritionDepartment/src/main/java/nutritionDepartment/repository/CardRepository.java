@@ -11,4 +11,6 @@ import java.util.Optional;
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
     List<Card> findByExpirationDateBefore(Date date);
+    Optional<Card> findByStudentId(Long studentId);
+    boolean existsByStudentId(Long studentId);
 }
