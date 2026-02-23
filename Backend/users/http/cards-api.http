@@ -66,6 +66,18 @@ Authorization: Bearer {{authToken}}
 
 ###
 
+### Get card by student ID (requires CASHIER token)
+GET http://localhost:8080/api/cards/student/1
+Authorization: Bearer {{authToken}}
+
+###
+
+### Get card by student ID — student has no card (expects 404)
+GET http://localhost:8080/api/cards/student/9999
+Authorization: Bearer {{authToken}}
+
+###
+
 ### Delete card by ID (requires CASHIER token)
 DELETE http://localhost:8080/api/cards/{{cardId}}
 Authorization: Bearer {{authToken}}

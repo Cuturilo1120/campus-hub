@@ -55,6 +55,12 @@ Authorization: Bearer {{authToken}}
 
 ###
 
+### Get total capacity of a dorm (sum of all room capacities across all pavilions)
+GET http://localhost:8081/api/dorms/{{dormId}}/capacity
+Authorization: Bearer {{authToken}}
+
+###
+
 ### Create dorm
 POST http://localhost:8081/api/dorms
 Content-Type: application/json
@@ -112,7 +118,6 @@ Authorization: Bearer {{authToken}}
 
 {
   "number": 1,
-  "capacity": 120,
   "address": "Bulevar cara Lazara 1",
   "dorm": { "id": 1 }
 }
@@ -307,6 +312,50 @@ Authorization: Bearer {{authToken}}
 {
   "dormId": 1
 }
+
+###
+
+### =============================================
+### REJECT APPLICATION (PRINCIPAL / ADMIN)
+### =============================================
+
+### Reject an application (requires PRINCIPAL or ADMIN token)
+PATCH http://localhost:8081/api/roomApplications/{{roomApplicationId}}/reject
+Authorization: Bearer {{authToken}}
+
+###
+
+### Reject — non-existent application (expects 404)
+PATCH http://localhost:8081/api/roomApplications/9999/reject
+Authorization: Bearer {{authToken}}
+
+###
+
+### Reject — already rejected application (expects 400)
+PATCH http://localhost:8081/api/roomApplications/{{roomApplicationId}}/reject
+Authorization: Bearer {{authToken}}
+
+###
+
+### =============================================
+### MY APPLICATIONS (STUDENT)
+### =============================================
+
+### Get all my applications (requires STUDENT token)
+GET http://localhost:8081/api/roomApplications/mine
+Authorization: Bearer {{studentToken}}
+
+###
+
+### Get my application by ID (requires STUDENT token)
+GET http://localhost:8081/api/roomApplications/mine/{{roomApplicationId}}
+Authorization: Bearer {{studentToken}}
+
+###
+
+### Get another student's application by ID (expects 400)
+GET http://localhost:8081/api/roomApplications/mine/1
+Authorization: Bearer {{studentToken}}
 
 
 

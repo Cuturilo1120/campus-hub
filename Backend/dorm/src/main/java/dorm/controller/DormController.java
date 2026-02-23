@@ -31,6 +31,11 @@ public class DormController {
         return dormService.save(dorm);
     }
 
+    @GetMapping("/{id}/capacity")
+    public int getCapacity(@PathVariable Long id) {
+        return dormService.getDormCapacity(id);
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         dormService.deleteDorm(id);

@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PavilionRepository extends JpaRepository<Pavilion, Long> {
 
+    boolean existsByNumberAndDormId(Integer number, Long dormId);
+
 }

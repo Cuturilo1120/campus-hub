@@ -66,6 +66,20 @@ public class CardService {
         ).getBody();
     }
 
+    public CardResponse getCardByStudentId(Long studentId) {
+        if (!studentRepository.existsById(studentId)) {
+            throw new EntityNotFoundException("Student not found");
+        }
+        try {
+            return restTemplate.getForObject(nutritionServiceUrl + "/cards/student/" + studentId, CardResponse.class);
+        } catch (HttpClientErrorException ex) {
+            if (ex.getStatusCode() == HttpStatus.NOT_FOUND) {
+                throw new EntityNotFoundException("No card found for this student");
+            }
+            throw ex;
+        }
+    }
+
     public CardResponse getCardById(Long id) {
         try {
             return restTemplate.getForObject(nutritionServiceUrl + "/cards/" + id, CardResponse.class);

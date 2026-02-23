@@ -24,6 +24,9 @@ public class PavilionService {
     }
 
     public Pavilion save(Pavilion pavilion) {
+        if (pavilion.getDorm() != null && pavilionRepository.existsByNumberAndDormId(pavilion.getNumber(), pavilion.getDorm().getId())) {
+            throw new IllegalArgumentException("Pavilion number " + pavilion.getNumber() + " already exists in this dorm");
+        }
         return pavilionRepository.save(pavilion);
     }
 

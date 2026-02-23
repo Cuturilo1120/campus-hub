@@ -36,6 +36,12 @@ public class CardController {
         return cardService.getCardById(id);
     }
 
+    @GetMapping("/student/{studentId}")
+    @PreAuthorize("hasRole('CASHIER')")
+    public CardResponse getByStudentId(@PathVariable Long studentId) {
+        return cardService.getCardByStudentId(studentId);
+    }
+
     @PatchMapping("/{id}/renew")
     @PreAuthorize("hasRole('CASHIER')")
     public CardResponse renew(@PathVariable Long id) {

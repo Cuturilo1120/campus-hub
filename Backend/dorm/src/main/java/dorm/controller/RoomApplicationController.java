@@ -38,7 +38,7 @@ public class RoomApplicationController {
     }
 
     @PostMapping("/apply")
-    @PreAuthorize("hasRole('ROLE_STUDENT')")
+    @PreAuthorize("hasRole('STUDENT')")
     @ResponseStatus(HttpStatus.CREATED)
     public RoomApplication apply(@RequestBody RoomApplicationRequest request) {
         Long studentId = (Long) SecurityContextHolder.getContext().getAuthentication().getDetails();
@@ -46,6 +46,32 @@ public class RoomApplicationController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Student identity not found in token");
         }
         return roomApplicationService.apply(studentId, request.dormId());
+    }
+
+    @PatchMapping("/{id}/reject")
+    @PreAuthorize("hasRole('PRINCIPAL') or hasRole('ADMIN')")
+    public RoomApplication reject(@PathVariable Long id) {
+        return roomApplicationService.reject(id);
+    }
+
+    @GetMapping("/mine")
+    @PreAuthorize("hasRole('STUDENT')")
+    public List<RoomApplication> getMyApplications() {
+        Long studentId = (Long) SecurityContextHolder.getContext().getAuthentication().getDetails();
+        if (studentId == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Student identity not found in token");
+        }
+        return roomApplicationService.getMyApplications(studentId);
+    }
+
+    @GetMapping("/mine/{id}")
+    @PreAuthorize("hasRole('STUDENT')")
+    public RoomApplication getMyApplicationById(@PathVariable Long id) {
+        Long studentId = (Long) SecurityContextHolder.getContext().getAuthentication().getDetails();
+        if (studentId == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Student identity not found in token");
+        }
+        return roomApplicationService.getMyApplicationById(studentId, id);
     }
 
     @DeleteMapping("/{id}")

@@ -13,6 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"number", "dorm_id"}))
 public class Pavilion {
 
     @Id
@@ -20,8 +21,6 @@ public class Pavilion {
     private Long id;
 
     private Integer number;
-
-    private Integer capacity;
 
     private String address;
 
