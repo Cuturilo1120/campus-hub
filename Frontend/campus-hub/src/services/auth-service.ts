@@ -7,14 +7,6 @@ export interface LoginRequest {
   password: string;
 }
 
-export interface RegisterRequest {
-  firstName: string;
-  lastName: string;
-  username: string;
-  password: string;
-  role: string; 
-}
-
 export interface AuthResponse {
   token: string;
   role: string
@@ -25,7 +17,7 @@ export interface AuthResponse {
 })
 export class AuthService {
 
-   private baseUrl = 'http://localhost:8080/api/auth';
+  private baseUrl = 'http://localhost:8080/api/auth';
 
   constructor(private http: HttpClient) {}
 
@@ -33,8 +25,8 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.baseUrl}/login`, request);
   }
 
-  register(request: RegisterRequest): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register`, request);
+  studentLogin(request: LoginRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.baseUrl}/students/login`, request);
   }
   
 }

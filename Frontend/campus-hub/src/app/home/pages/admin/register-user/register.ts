@@ -4,9 +4,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { AuthService } from '../../../../../services/auth-service';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
+import { UsersService } from '../../../../../services/users-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -26,11 +27,12 @@ import { CommonModule } from '@angular/common';
 export class Register {
 
   form;
-  roles = ['ADMIN', 'CASHIER', 'PRINCIPAL'];
+  roles = ['ADMIN', 'CASHIER', 'PRINCIPAL', 'COOK'];
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private usersService: UsersService,
+    private router: Router,
   ) {
     this.form = this.fb.group({
       firstName: ['', Validators.required],
@@ -44,9 +46,12 @@ export class Register {
   submit() {
     if (this.form.invalid) return;
 
-    this.authService.register(this.form.value as any)
+    this.usersService.registerUser(this.form.value as any)
       .subscribe({
-        next: () => alert('User registered successfully'),
+        next: () => {
+          alert('User registered successfully');
+          this.router.navigate(['/admin']);
+        },
         error: (err) => {
           console.error(err);
           alert('Register failed');

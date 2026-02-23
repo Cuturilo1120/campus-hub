@@ -33,4 +33,8 @@ export class NutritionLayout {
     localStorage.clear();
     window.location.href = '/';
   }
+
+  get role(): string | null {
+    return localStorage.getItem('role');
+  }
 }

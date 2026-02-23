@@ -11,6 +11,18 @@
         Dashboard
       </a>
 
+    @if (role === 'CASHIER') {
+      <a mat-list-item routerLink="/nutrition/students">
+        <mat-icon matListIcon>people</mat-icon>
+        Students
+      </a>
+
+      <a mat-list-item routerLink="/nutrition/register-student">
+        <mat-icon matListIcon>person_add</mat-icon>
+        Register Student
+      </a>
+    }
+
     </mat-nav-list>
 
   </mat-sidenav>
