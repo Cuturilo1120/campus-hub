@@ -1,0 +1,32 @@
+.dashboard-container {
+  height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  padding-top: 1rem;
+}
+
+.sidebar-header {
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.toolbar-title {
+  margin-left: 1rem;
+  font-weight: 500;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.dashboard-content {
+  padding: 2rem;
+}

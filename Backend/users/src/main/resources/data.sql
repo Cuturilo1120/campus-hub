@@ -1,0 +1,3 @@
+INSERT INTO employee (first_name, last_name, username, password, role) VALUES ('Admin','Admin','admin','$2a$10$fcugCfPY3Protz.JZ4TWFerbKqSccg6giWxn5obR9oP.Lm9NDC2Zq','ADMIN');
+INSERT INTO employee (first_name, last_name, username, password, role) VALUES ('Cashier','Cashier','cashier','$2a$10$mOKMH4zXY4waMP480goGve6NIyetBtny9FHYmdOoBxxfEMYYAPLlK','CASHIER');
+INSERT INTO employee (first_name, last_name, username, password, role) VALUES ('Principal','Principal','principal','$2a$10$Glx37xO9KgLafQ3CPcxRdeVIsP1n/NjQ0MnhKJtkXxIFmmwmbU39a','PRINCIPAL');
