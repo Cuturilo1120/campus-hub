@@ -36,16 +36,16 @@ public class CardService {
     private String nutritionServiceUrl;
 
     public CardResponse createCard(CardRequest request) {
-        if (!studentRepository.existsById(request.studentId())) {
-            throw new EntityNotFoundException("Student not found");
-        }
+        var student = studentRepository.findById(request.studentId())
+                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
         Date expirationDate = Date.from(
                 LocalDate.now().plusYears(1).atStartOfDay(ZoneId.systemDefault()).toInstant()
         );
         Map<String, Object> payload = Map.of(
                 "studentId", request.studentId(),
                 "balance", 0.0,
-                "expirationDate", expirationDate
+                "expirationDate", expirationDate,
+                "studyStatus", student.getStatus().name()
         );
         try {
             return restTemplate.postForObject(nutritionServiceUrl + "/cards", payload, CardResponse.class);

@@ -43,6 +43,7 @@ public class CardService {
         card.setStudentId(request.studentId());
         card.setBalance(request.balance());
         card.setExpirationDate(request.expirationDate());
+        card.setStudyStatus(request.studyStatus());
         Card saved = cardRepository.save(card);
 
         Arrays.stream(MealType.values()).forEach(type -> {
@@ -115,10 +116,11 @@ public class CardService {
                 .orElseThrow(() -> new EntityNotFoundException("Card not found for student"));
 
         Menu menu = menuRepository.findById(1L).orElseThrow();
+        boolean isSelfFinance = "SELF_FINANCE".equals(card.getStudyStatus());
         double price = switch (request.mealType()) {
-            case BREAKFAST -> menu.getBreakfastPrice();
-            case LUNCH -> menu.getLunchPrice();
-            case DINNER -> menu.getDinnerPrice();
+            case BREAKFAST -> isSelfFinance ? requirePrice(menu.getBreakfastPriceSelfFinance(), "SELF_FINANCE breakfast") : requirePrice(menu.getBreakfastPriceBudget(), "BUDGET breakfast");
+            case LUNCH -> isSelfFinance ? requirePrice(menu.getLunchPriceSelfFinance(), "SELF_FINANCE lunch") : requirePrice(menu.getLunchPriceBudget(), "BUDGET lunch");
+            case DINNER -> isSelfFinance ? requirePrice(menu.getDinnerPriceSelfFinance(), "SELF_FINANCE dinner") : requirePrice(menu.getDinnerPriceBudget(), "BUDGET dinner");
         };
 
         if (card.getBalance() < price) {
@@ -154,6 +156,11 @@ public class CardService {
         mealRepository.save(meal);
 
         return toResponse(card);
+    }
+
+    private double requirePrice(Double price, String label) {
+        if (price == null) throw new IllegalArgumentException("Menu price for " + label + " has not been configured yet");
+        return price;
     }
 
     private CardResponse toResponse(Card card) {

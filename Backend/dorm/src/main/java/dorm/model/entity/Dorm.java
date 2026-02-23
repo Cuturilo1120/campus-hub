@@ -1,5 +1,6 @@
 package dorm.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,9 +23,11 @@ public class Dorm {
     private String city;
 
     @OneToMany(mappedBy = "dorm")
+    @JsonManagedReference("dorm-pavilion")
     private List<Pavilion> pavilions;
 
     @OneToMany(mappedBy = "dorm")
+    @JsonManagedReference("dorm-application")
     private List<RoomApplication> roomApplications;
 
 }

@@ -20,14 +20,24 @@ public class MenuService {
 
     public MenuResponse updateMenu(MenuUpdateRequest request) {
         Menu menu = menuRepository.findById(1L).orElseThrow();
-        if (request.breakfastPrice() != null) menu.setBreakfastPrice(request.breakfastPrice());
-        if (request.lunchPrice() != null) menu.setLunchPrice(request.lunchPrice());
-        if (request.dinnerPrice() != null) menu.setDinnerPrice(request.dinnerPrice());
+        if (request.breakfastPriceBudget() != null) menu.setBreakfastPriceBudget(request.breakfastPriceBudget());
+        if (request.lunchPriceBudget() != null) menu.setLunchPriceBudget(request.lunchPriceBudget());
+        if (request.dinnerPriceBudget() != null) menu.setDinnerPriceBudget(request.dinnerPriceBudget());
+        if (request.breakfastPriceSelfFinance() != null) menu.setBreakfastPriceSelfFinance(request.breakfastPriceSelfFinance());
+        if (request.lunchPriceSelfFinance() != null) menu.setLunchPriceSelfFinance(request.lunchPriceSelfFinance());
+        if (request.dinnerPriceSelfFinance() != null) menu.setDinnerPriceSelfFinance(request.dinnerPriceSelfFinance());
         return toResponse(menuRepository.save(menu));
     }
 
     private MenuResponse toResponse(Menu menu) {
-        return new MenuResponse(menu.getBreakfastPrice(), menu.getLunchPrice(), menu.getDinnerPrice());
+        return new MenuResponse(
+                menu.getBreakfastPriceBudget(),
+                menu.getLunchPriceBudget(),
+                menu.getDinnerPriceBudget(),
+                menu.getBreakfastPriceSelfFinance(),
+                menu.getLunchPriceSelfFinance(),
+                menu.getDinnerPriceSelfFinance()
+        );
     }
 
 }

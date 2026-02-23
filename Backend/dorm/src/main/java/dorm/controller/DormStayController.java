@@ -4,6 +4,7 @@ import dorm.model.entity.DormStay;
 import dorm.service.DormStayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class DormStayController {
     private DormStayService dormStayService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PRINCIPAL')")
     public List<DormStay> getAll() {
         return dormStayService.getAllDormStay();
     }

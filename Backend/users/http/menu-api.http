@@ -2,8 +2,37 @@
 ### MENU
 ### =============================================
 
-### Get menu (public — no auth required)
+### Get menu — all 6 prices (public — no auth required)
 GET http://localhost:8080/api/menu
+
+###
+
+### =============================================
+### SETUP — Login as student (sets studentToken)
+### =============================================
+
+### Login as student
+POST http://localhost:8080/api/auth/students/login
+Content-Type: application/json
+
+{
+  "username": "marko.markovic",
+  "password": "student123"
+}
+
+> {%
+  client.global.set("studentToken", response.body.token);
+%}
+
+###
+
+### =============================================
+### STUDENT MENU VIEW
+### =============================================
+
+### Get menu for my status — 3 prices only (requires STUDENT token)
+GET http://localhost:8080/api/menu/mine
+Authorization: Bearer {{studentToken}}
 
 ###
 
@@ -36,9 +65,12 @@ Content-Type: application/json
 Authorization: Bearer {{cookToken}}
 
 {
-  "breakfastPrice": 2.50,
-  "lunchPrice": 5.00,
-  "dinnerPrice": 3.50
+  "breakfastPriceBudget": 2.00,
+  "lunchPriceBudget": 4.00,
+  "dinnerPriceBudget": 3.00,
+  "breakfastPriceSelfFinance": 2.50,
+  "lunchPriceSelfFinance": 4.80,
+  "dinnerPriceSelfFinance": 3.60
 }
 
 ###
@@ -49,7 +81,7 @@ Content-Type: application/json
 Authorization: Bearer {{cookToken}}
 
 {
-  "lunchPrice": 4.50
+  "lunchPriceBudget": 4.00
 }
 
 ###
@@ -60,5 +92,5 @@ Content-Type: application/json
 Authorization: Bearer {{cookToken}}
 
 {
-  "breakfastPrice": 1.00
+  "breakfastPriceBudget": 1.00
 }

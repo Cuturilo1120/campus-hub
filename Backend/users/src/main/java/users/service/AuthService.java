@@ -37,7 +37,12 @@ public class AuthService {
     private JwtUtil jwtUtil;
 
     public AuthResponse login(LoginRequest request) {
-        UserDetails userDetails = employeeService.loadUserByUsername(request.username());
+        UserDetails userDetails;
+        try {
+            userDetails = employeeService.loadUserByUsername(request.username());
+        } catch (Exception e) {
+            throw new BadCredentialsException("Invalid credentials");
+        }
         if (!passwordEncoder.matches(request.password(), userDetails.getPassword())) {
             throw new BadCredentialsException("Invalid credentials");
         }

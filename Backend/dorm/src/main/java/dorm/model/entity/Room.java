@@ -1,5 +1,7 @@
 package dorm.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,9 +24,11 @@ public class Room {
     private Integer capacity;
 
     @ManyToOne
+    @JsonBackReference("pavilion-room")
     private Pavilion pavilion;
 
     @OneToMany(mappedBy = "room")
+    @JsonManagedReference("room-dormstay")
     private List<DormStay> dormStayList;
 
 }

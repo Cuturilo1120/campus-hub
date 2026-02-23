@@ -1,5 +1,6 @@
 package dorm.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,7 @@ public class RoomApplication {
     private Long studentId;
 
     @ManyToOne
+    @JsonBackReference("dorm-application")
     private Dorm dorm;
 
     private Long employeeId;
