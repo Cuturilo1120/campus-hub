@@ -1,0 +1,302 @@
+### =============================================
+### SETUP — Login via users service (sets authToken)
+### Token is issued by users (:8080) and verified directly by dorm (:8081)
+### =============================================
+
+### Login as admin (sets authToken)
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "password"
+}
+
+> {%
+  client.global.set("authToken", response.body.token);
+%}
+
+###
+
+### Login as manager (sets authToken)
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "anna.gunn",
+  "password": "password123"
+}
+
+> {%
+  client.global.set("authToken", response.body.token);
+%}
+
+
+
+### =============================================
+### DORMS
+### =============================================
+
+### Get all dorms
+GET http://localhost:8081/api/dorms
+Authorization: Bearer {{authToken}}
+
+###
+
+### Get dorm by ID
+GET http://localhost:8081/api/dorms/{{dormId}}
+Authorization: Bearer {{authToken}}
+
+###
+
+### Get dorm — non-existent (expects 404)
+GET http://localhost:8081/api/dorms/9999
+Authorization: Bearer {{authToken}}
+
+###
+
+### Create dorm
+POST http://localhost:8081/api/dorms
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "Studentski Dom Novi Sad",
+  "city": "Novi Sad"
+}
+
+> {%
+  client.global.set("dormId", response.body.id);
+%}
+
+###
+
+### Delete dorm by ID
+DELETE http://localhost:8081/api/dorms/{{dormId}}
+Authorization: Bearer {{authToken}}
+
+###
+
+### Delete dorm — non-existent (expects 404)
+DELETE http://localhost:8081/api/dorms/9999
+Authorization: Bearer {{authToken}}
+
+
+
+### =============================================
+### PAVILIONS
+### =============================================
+
+### Get all pavilions
+GET http://localhost:8081/api/pavilions
+Authorization: Bearer {{authToken}}
+
+###
+
+### Get pavilion by ID
+GET http://localhost:8081/api/pavilions/{{pavilionId}}
+Authorization: Bearer {{authToken}}
+
+###
+
+### Get pavilion — non-existent (expects 404)
+GET http://localhost:8081/api/pavilions/9999
+Authorization: Bearer {{authToken}}
+
+###
+
+### Create pavilion (linked to existing dorm)
+POST http://localhost:8081/api/pavilions
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "number": 1,
+  "capacity": 120,
+  "address": "Bulevar cara Lazara 1",
+  "dorm": { "id": 1 }
+}
+
+> {%
+  client.global.set("pavilionId", response.body.id);
+%}
+
+###
+
+### Delete pavilion by ID
+DELETE http://localhost:8081/api/pavilions/{{pavilionId}}
+Authorization: Bearer {{authToken}}
+
+###
+
+### Delete pavilion — non-existent (expects 404)
+DELETE http://localhost:8081/api/pavilions/9999
+Authorization: Bearer {{authToken}}
+
+
+
+### =============================================
+### ROOMS
+### =============================================
+
+### Get all rooms
+GET http://localhost:8081/api/rooms
+Authorization: Bearer {{authToken}}
+
+###
+
+### Get room by ID
+GET http://localhost:8081/api/rooms/{{roomId}}
+Authorization: Bearer {{authToken}}
+
+###
+
+### Get room — non-existent (expects 404)
+GET http://localhost:8081/api/rooms/9999
+Authorization: Bearer {{authToken}}
+
+###
+
+### Create room (linked to existing pavilion)
+POST http://localhost:8081/api/rooms
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "roomNumber": "101",
+  "capacity": 2,
+  "pavilion": { "id": 1 }
+}
+
+> {%
+  client.global.set("roomId", response.body.id);
+%}
+
+###
+
+### Delete room by ID
+DELETE http://localhost:8081/api/rooms/{{roomId}}
+Authorization: Bearer {{authToken}}
+
+###
+
+### Delete room — non-existent (expects 404)
+DELETE http://localhost:8081/api/rooms/9999
+Authorization: Bearer {{authToken}}
+
+
+
+### =============================================
+### ROOM APPLICATIONS (requires ADMIN or MANAGER)
+### =============================================
+
+### Get all room applications (requires ADMIN or MANAGER token)
+GET http://localhost:8081/api/roomApplications
+Authorization: Bearer {{authToken}}
+
+###
+
+### Get all room applications — no token (expects 403)
+GET http://localhost:8081/api/roomApplications
+
+###
+
+### Get room application by ID
+GET http://localhost:8081/api/roomApplications/{{roomApplicationId}}
+Authorization: Bearer {{authToken}}
+
+###
+
+### Get room application — non-existent (expects 404)
+GET http://localhost:8081/api/roomApplications/9999
+Authorization: Bearer {{authToken}}
+
+###
+
+### Create room application
+POST http://localhost:8081/api/roomApplications
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "dateOfApplication": "2026-02-23",
+  "status": "IN_PROGRESS",
+  "studentId": 1,
+  "employeeId": 1,
+  "dorm": { "id": 1 }
+}
+
+> {%
+  client.global.set("roomApplicationId", response.body.id);
+%}
+
+###
+
+### Delete room application by ID
+DELETE http://localhost:8081/api/roomApplications/{{roomApplicationId}}
+Authorization: Bearer {{authToken}}
+
+###
+
+### Delete room application — non-existent (expects 404)
+DELETE http://localhost:8081/api/roomApplications/9999
+Authorization: Bearer {{authToken}}
+
+
+
+### =============================================
+### DORM STAYS (requires ADMIN or MANAGER)
+### =============================================
+
+### Get all dorm stays (requires ADMIN or MANAGER token)
+GET http://localhost:8081/api/dormStays
+Authorization: Bearer {{authToken}}
+
+###
+
+### Get all dorm stays — no token (expects 403)
+GET http://localhost:8081/api/dormStays
+
+###
+
+### Get dorm stay by ID
+GET http://localhost:8081/api/dormStays/{{dormStayId}}
+Authorization: Bearer {{authToken}}
+
+###
+
+### Get dorm stay — non-existent (expects 404)
+GET http://localhost:8081/api/dormStays/9999
+Authorization: Bearer {{authToken}}
+
+###
+
+### Create dorm stay (linked to existing room)
+POST http://localhost:8081/api/dormStays
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "moveInDate": "2026-03-01",
+  "moveOutDate": "2027-03-01",
+  "stayStatus": "WAITING",
+  "studentId": 1,
+  "emplyeeId": 1,
+  "room": { "id": 1 }
+}
+
+> {%
+  client.global.set("dormStayId", response.body.id);
+%}
+
+###
+
+### Delete dorm stay by ID
+DELETE http://localhost:8081/api/dormStays/{{dormStayId}}
+Authorization: Bearer {{authToken}}
+
+###
+
+### Delete dorm stay — non-existent (expects 404)
+DELETE http://localhost:8081/api/dormStays/9999
+Authorization: Bearer {{authToken}}
