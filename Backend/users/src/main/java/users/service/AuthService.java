@@ -88,7 +88,10 @@ public class AuthService {
         if (!passwordEncoder.matches(request.password(), userDetails.getPassword())) {
             throw new BadCredentialsException("Invalid credentials");
         }
-        String token = jwtUtil.generateToken(userDetails);
+        Long studentId = studentRepository.findByUsername(request.username())
+                .orElseThrow(() -> new BadCredentialsException("Invalid credentials"))
+                .getId();
+        String token = jwtUtil.generateTokenWithStudentId(userDetails, studentId);
         return new AuthResponse(token, request.username(), "STUDENT");
     }
 }

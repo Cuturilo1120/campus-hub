@@ -38,6 +38,21 @@ public class JwtUtil {
                 .compact();
     }
 
+    public String generateTokenWithStudentId(UserDetails userDetails, Long studentId) {
+        String role = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .findFirst()
+                .orElse("");
+        return Jwts.builder()
+                .subject(userDetails.getUsername())
+                .claim("role", role)
+                .claim("studentId", studentId)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(getSigningKey())
+                .compact();
+    }
+
     public String extractUsername(String token) {
         return parseClaims(token).getSubject();
     }

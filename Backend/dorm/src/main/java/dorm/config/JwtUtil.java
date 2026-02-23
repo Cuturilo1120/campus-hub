@@ -27,6 +27,12 @@ public class JwtUtil {
         return parseClaims(token).get("role", String.class);
     }
 
+    public Long extractStudentId(String token) {
+        Object value = parseClaims(token).get("studentId");
+        if (value instanceof Number n) return n.longValue();
+        return null;
+    }
+
     public boolean isTokenExpired(String token) {
         return parseClaims(token).getExpiration().before(new Date());
     }

@@ -18,7 +18,7 @@ Content-Type: application/json
 
 ###
 
-### Login as manager (sets authToken)
+### Login as principal (sets authToken)
 POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
@@ -187,10 +187,29 @@ Authorization: Bearer {{authToken}}
 
 
 ### =============================================
-### ROOM APPLICATIONS (requires ADMIN or MANAGER)
+### SETUP — Login as student (sets studentToken)
 ### =============================================
 
-### Get all room applications (requires ADMIN or MANAGER token)
+### Login as student
+POST http://localhost:8080/api/auth/students/login
+Content-Type: application/json
+
+{
+  "username": "marko.markovic",
+  "password": "student123"
+}
+
+> {%
+  client.global.set("studentToken", response.body.token);
+%}
+
+
+
+### =============================================
+### ROOM APPLICATIONS (requires ADMIN or PRINCIPAL)
+### =============================================
+
+### Get all room applications (requires ADMIN or PRINCIPAL token)
 GET http://localhost:8081/api/roomApplications
 Authorization: Bearer {{authToken}}
 
@@ -222,7 +241,6 @@ Authorization: Bearer {{authToken}}
   "dateOfApplication": "2026-02-23",
   "status": "IN_PROGRESS",
   "studentId": 1,
-  "employeeId": 1,
   "dorm": { "id": 1 }
 }
 
@@ -241,6 +259,54 @@ Authorization: Bearer {{authToken}}
 ### Delete room application — non-existent (expects 404)
 DELETE http://localhost:8081/api/roomApplications/9999
 Authorization: Bearer {{authToken}}
+
+###
+
+### Apply for a room in a dorm (requires STUDENT token)
+POST http://localhost:8081/api/roomApplications/apply
+Content-Type: application/json
+Authorization: Bearer {{studentToken}}
+
+{
+  "dormId": 1
+}
+
+> {%
+  client.global.set("roomApplicationId", response.body.id);
+%}
+
+###
+
+### Apply again for same dorm — duplicate (expects 400)
+POST http://localhost:8081/api/roomApplications/apply
+Content-Type: application/json
+Authorization: Bearer {{studentToken}}
+
+{
+  "dormId": 1
+}
+
+###
+
+### Apply — non-existent dorm (expects 404)
+POST http://localhost:8081/api/roomApplications/apply
+Content-Type: application/json
+Authorization: Bearer {{studentToken}}
+
+{
+  "dormId": 9999
+}
+
+###
+
+### Apply — as admin, not student (expects 403)
+POST http://localhost:8081/api/roomApplications/apply
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "dormId": 1
+}
 
 
 

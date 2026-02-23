@@ -30,6 +30,4 @@ public class RoomApplication {
     @JsonBackReference("dorm-application")
     private Dorm dorm;
 
-    private Long employeeId;
-
 }

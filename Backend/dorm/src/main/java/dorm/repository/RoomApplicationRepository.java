@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RoomApplicationRepository extends JpaRepository<RoomApplication, Long> {
 
+    boolean existsByStudentIdAndDormId(Long studentId, Long dormId);
+
 }
