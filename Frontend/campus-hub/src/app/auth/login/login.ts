@@ -26,6 +26,7 @@ export class Login {
 
   loginForm;
   loginError: string | null = null;
+  loginMode: 'EMPLOYEE' | 'STUDENT' = 'EMPLOYEE';
 
   constructor(
     private fb: FormBuilder,
@@ -44,28 +45,35 @@ export class Login {
 
     this.loginError = null;
 
-    this.authService.login(this.loginForm.value as any)
-      .subscribe({
-        next: (response) => {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('role', response.role);
+    const loginObservable =
+      this.loginMode === 'EMPLOYEE'
+        ? this.authService.login(this.loginForm.value as any)
+        : this.authService.studentLogin(this.loginForm.value as any);
 
-          const role = response.role;
+    loginObservable.subscribe({
+      next: (response) => {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('role', response.role);
 
-          if (role === 'ADMIN') {
-            this.router.navigate(['/admin']);
-          }
-          else if (role === 'CASHIER') {
-            this.router.navigate(['/nutrition']);
-          }
-          else if (role === 'PRINCIPAL') {
-            this.router.navigate(['/dorm']);
-          }
-        },
-        error: (err) => {
-          this.loginError = 'Invalid username or password';
-          this.cdr.detectChanges();
+        const role = response.role;
+
+        if (role === 'ADMIN') {
+          this.router.navigate(['/admin']);
         }
-      });
+        else if (role === 'CASHIER' || role === 'COOK') {
+          this.router.navigate(['/nutrition']);
+        }
+        else if (role === 'PRINCIPAL') {
+          this.router.navigate(['/dorm']);
+        }
+        else {
+          this.router.navigate(['/']);
+        }
+      },
+      error: () => {
+        this.loginError = 'Invalid username or password';
+        this.cdr.detectChanges();
+      }
+    });
   }
 }

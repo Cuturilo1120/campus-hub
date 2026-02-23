@@ -1,8 +1,25 @@
-import { P } from '@angular/cdk/keycodes';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { withExperimentalPlatformNavigation } from '@angular/router';
 import { Observable } from 'rxjs';
+
+export interface RegisterUserRequest {
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
+  role: string; 
+}
+
+export interface RegisterStudentRequest {
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
+  indexNumber: string;
+  city: string;
+  facultyName: string;
+  role: string; 
+}
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +58,26 @@ export class UsersService {
     };
 
     return this.http.delete(`${this.baseUrl}/employees/` + employeeId, { headers });
+  }
+
+  registerUser(request: RegisterUserRequest): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    const headers = {
+      Authorization: `Bearer ${token}`
+    };
+
+    return this.http.post(`${this.baseUrl}/auth/register`, request, { headers });
+  }
+
+  registerStudent(request: RegisterStudentRequest): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    const headers = {
+      Authorization: `Bearer ${token}`
+    };
+
+    return this.http.post(`${this.baseUrl}/auth/students/register`, request, { headers });
   }
 
   getAllStudents(): Observable<any> {

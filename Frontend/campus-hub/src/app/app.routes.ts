@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { Login } from './auth/login/login';
-import { Register } from './home/pages/admin/register/register';
+import { Register } from './home/pages/admin/register-user/register';
 import { AdminDashboard } from './home/pages/admin/admin-dashboard/admin-dashboard';
 import { UserList } from './home/pages/admin/user-list/user-list';
 import { NutritionLayout } from './home/layouts/nutrition-layout/nutrition-layout';
@@ -9,6 +9,9 @@ import { DormLayout } from './home/layouts/dorm-layout/dorm-layout';
 import { DormDashboard } from './home/pages/dorm/dorm-dashboard/dorm-dashboard';
 import { AdminLayout } from './home/layouts/admin-layout/admin-layout';
 import { UserDetails } from './home/pages/admin/user-details/user-details';
+import { RegisterStudent } from './home/pages/register-student/register-student';
+import { StudentDetails } from './home/pages/student-details/student-details';
+import { StudentList } from './home/pages/student-list/student-list';
 
 export const routes: Routes = [
     { path: '', component: Login },
@@ -27,7 +30,10 @@ export const routes: Routes = [
         path: 'nutrition',
         component: NutritionLayout,
         children: [
-            { path: '', component: NutritionDashboard } 
+            { path: '', component: NutritionDashboard } ,
+            { path: 'register-student', component: RegisterStudent },
+            { path: 'students', component: StudentList },
+            { path: 'students/:id', component: StudentDetails }
         ]
     },
 
@@ -35,7 +41,10 @@ export const routes: Routes = [
         path: 'dorm',
         component: DormLayout,
         children: [
-            { path: '', component: DormDashboard }
+            { path: '', component: DormDashboard },
+            { path: 'register-student', component: RegisterStudent },
+            { path: 'students', component: StudentList },
+            { path: 'students/:id', component: StudentDetails }
         ]
     }
 ];

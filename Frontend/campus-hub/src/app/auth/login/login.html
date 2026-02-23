@@ -1,8 +1,18 @@
 <div class="login-container">
   <mat-card class="login-card">
+    <h2>
+      {{ loginMode === 'EMPLOYEE' ? 'Employee Login' : 'Student Login' }}
+    </h2>
 
-    <h2>Login</h2>
+    <div class="login-toggle">
+      <button mat-button (click)="loginMode = 'EMPLOYEE'">
+        Employee Login
+      </button>
 
+      <button mat-button (click)="loginMode = 'STUDENT'">
+        Student Login
+      </button>
+    </div>
     <form [formGroup]="loginForm" (ngSubmit)="submit()">
 
       <mat-form-field appearance="outline" class="full-width">

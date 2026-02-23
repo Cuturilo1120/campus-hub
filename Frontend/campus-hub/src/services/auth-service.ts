@@ -7,14 +7,6 @@ export interface LoginRequest {
   password: string;
 }
 
-export interface RegisterRequest {
-  firstName: string;
-  lastName: string;
-  username: string;
-  password: string;
-  role: string; 
-}
-
 export interface AuthResponse {
   token: string;
   role: string
@@ -33,14 +25,8 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.baseUrl}/login`, request);
   }
 
-  register(request: RegisterRequest): Observable<any> {
-    const token = localStorage.getItem('token');
-
-    const headers = {
-      Authorization: `Bearer ${token}`
-    };
-
-    return this.http.post(`${this.baseUrl}/register`, request, { headers });
+  studentLogin(request: LoginRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.baseUrl}/students/login`, request);
   }
   
 }
