@@ -25,7 +25,7 @@ export interface AuthResponse {
 })
 export class AuthService {
 
-   private baseUrl = 'http://localhost:8080/api/auth';
+  private baseUrl = 'http://localhost:8080/api/auth';
 
   constructor(private http: HttpClient) {}
 
@@ -34,7 +34,13 @@ export class AuthService {
   }
 
   register(request: RegisterRequest): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register`, request);
+    const token = localStorage.getItem('token');
+
+    const headers = {
+      Authorization: `Bearer ${token}`
+    };
+
+    return this.http.post(`${this.baseUrl}/register`, request, { headers });
   }
   
 }

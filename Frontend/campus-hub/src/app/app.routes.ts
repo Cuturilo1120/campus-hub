@@ -8,6 +8,7 @@ import { NutritionDashboard } from './home/pages/nutrition/nutrition-dashboard/n
 import { DormLayout } from './home/layouts/dorm-layout/dorm-layout';
 import { DormDashboard } from './home/pages/dorm/dorm-dashboard/dorm-dashboard';
 import { AdminLayout } from './home/layouts/admin-layout/admin-layout';
+import { UserDetails } from './home/pages/admin/user-details/user-details';
 
 export const routes: Routes = [
     { path: '', component: Login },
@@ -17,7 +18,8 @@ export const routes: Routes = [
         children: [
             { path: '', component: AdminDashboard },
             { path: 'users', component: UserList },
-            { path: 'register', component: Register }
+            { path: 'register', component: Register },
+            { path: 'users/:id', component: UserDetails }
         ]
     },
 

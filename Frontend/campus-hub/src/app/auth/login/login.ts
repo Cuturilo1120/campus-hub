@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth-service';
 import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ import { MatCardModule } from '@angular/material/card';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    CommonModule
   ],
   templateUrl: './login.html',
   styleUrls: ['./login.scss']
@@ -23,11 +25,13 @@ import { MatCardModule } from '@angular/material/card';
 export class Login {
 
   loginForm;
+  loginError: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
@@ -37,6 +41,8 @@ export class Login {
 
   submit() {
     if (this.loginForm.invalid) return;
+
+    this.loginError = null;
 
     this.authService.login(this.loginForm.value as any)
       .subscribe({
@@ -57,8 +63,8 @@ export class Login {
           }
         },
         error: (err) => {
-          console.error(err);
-          alert('Login failed');
+          this.loginError = 'Invalid username or password';
+          this.cdr.detectChanges();
         }
       });
   }
