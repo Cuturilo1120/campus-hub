@@ -1,3 +1,10 @@
 package users.model.dto;
 
-public record MenuUpdateRequest(Double breakfastPrice, Double lunchPrice, Double dinnerPrice) {}
+public record MenuUpdateRequest(
+        Double breakfastPriceBudget,
+        Double lunchPriceBudget,
+        Double dinnerPriceBudget,
+        Double breakfastPriceSelfFinance,
+        Double lunchPriceSelfFinance,
+        Double dinnerPriceSelfFinance
+) {}
