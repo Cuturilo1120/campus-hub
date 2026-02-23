@@ -25,6 +25,8 @@ public class Card {
 
     private Long studentId;
 
+    private String studyStatus;
+
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
     private List<Meal> meals;
 
