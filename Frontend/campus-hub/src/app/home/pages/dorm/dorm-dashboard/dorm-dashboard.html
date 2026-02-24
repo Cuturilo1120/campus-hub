@@ -1,1 +1,61 @@
-<p>dorm-dashboard works!</p>
+<div class="dashboard-wrapper">
+
+  <h2>Dormitory Management</h2>
+
+  <div class="card-grid">
+
+    <mat-card class="action-card">
+      <h3>Students</h3>
+
+      <p>
+        Manage dormitory students and their assignments.
+      </p>
+
+      <button mat-raised-button color="primary" routerLink="/dorm/students">
+        Open Students
+      </button>
+    </mat-card>
+
+    <mat-card class="action-card">
+      <h3>Register Student</h3>
+
+      <p>
+        Add a new student to dormitory system.
+      </p>
+
+      <button mat-raised-button color="accent" routerLink="/dorm/register-student">
+        Register Student
+      </button>
+    </mat-card>
+
+    @if (role === 'PRINCIPAL') {
+
+      <mat-card class="action-card">
+        <h3>Dorm Infrastructure</h3>
+
+        <p>
+          Manage dorms, pavilions, rooms, and accommodation structures.
+        </p>
+
+        <button mat-raised-button color="primary" routerLink="/dorm/dorms">
+          Manage Infrastructure
+        </button>
+      </mat-card>
+
+      <mat-card class="action-card">
+        <h3>Room Applications</h3>
+
+        <p>
+          Process and review room accommodation applications.
+        </p>
+
+        <button mat-raised-button color="accent" routerLink="/dorm/room-applications">
+          Open Applications
+        </button>
+      </mat-card>
+
+    }
+
+  </div>
+
+</div>

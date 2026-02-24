@@ -1,1 +1,33 @@
-<p>student-dashboard works!</p>
+<div class="dashboard-wrapper">
+
+  <h2>Student Portal</h2>
+
+  <div class="card-grid">
+
+    <mat-card class="action-card">
+      <h3>My Card</h3>
+
+      <p>
+        View your student card balance and available meals.
+      </p>
+
+      <button mat-raised-button color="primary" routerLink="/student/my-card">
+        Open Card
+      </button>
+    </mat-card>
+
+    <mat-card class="action-card">
+      <h3>Menu</h3>
+
+      <p>
+        Check today's available nutrition menu.
+      </p>
+
+      <button mat-raised-button color="accent" routerLink="/student/menu">
+        View Menu
+      </button>
+    </mat-card>
+
+  </div>
+
+</div>

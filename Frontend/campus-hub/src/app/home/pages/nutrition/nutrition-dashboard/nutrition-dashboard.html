@@ -1,1 +1,53 @@
-<p>nutrition-dashboard works!</p>
+<div class="dashboard-wrapper">
+
+  <h2>Welcome to Nutrition Panel</h2>
+
+  @if (role === 'CASHIER') {
+
+    <div class="card-grid">
+
+      <mat-card class="action-card">
+        <h3>Manage Students</h3>
+        <p>View and manage registered students and their cards.</p>
+        <button mat-raised-button color="primary" routerLink="/nutrition/students">
+          Go to Students
+        </button>
+      </mat-card>
+
+      <mat-card class="action-card">
+        <h3>Register Student</h3>
+        <p>Create a new student and assign a meal card.</p>
+        <button mat-raised-button color="accent" routerLink="/nutrition/register-student">
+          Register
+        </button>
+      </mat-card>
+
+    </div>
+
+  }
+
+  @if (role === 'COOK') {
+
+    <div class="card-grid">
+
+      <mat-card class="action-card">
+        <h3>Consume Meal</h3>
+        <p>Scan or enter card ID to serve a meal.</p>
+        <button mat-raised-button color="primary" routerLink="/nutrition/consume-meal">
+          Open Consume Page
+        </button>
+      </mat-card>
+
+      <mat-card class="action-card">
+        <h3>View Menu</h3>
+        <p>Check today’s available meals.</p>
+        <button mat-raised-button color="accent" routerLink="/nutrition/menu">
+          View Menu
+        </button>
+      </mat-card>
+
+    </div>
+
+  }
+
+</div>

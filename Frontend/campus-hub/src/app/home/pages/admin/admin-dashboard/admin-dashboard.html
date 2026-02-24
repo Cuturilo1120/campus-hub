@@ -1,1 +1,33 @@
-<p>admin-dashboard works!</p>
+<div class="dashboard-wrapper">
+
+  <h2>System Administration</h2>
+
+  <div class="card-grid">
+
+    <mat-card class="action-card">
+      <h3>User Management</h3>
+
+      <p>
+        Create, edit, or remove system users and manage permissions.
+      </p>
+
+      <button mat-raised-button color="primary" routerLink="/admin/users">
+        Open Users
+      </button>
+    </mat-card>
+
+    <mat-card class="action-card">
+      <h3>Register User</h3>
+
+      <p>
+        Add a new user to the system with assigned role and credentials.
+      </p>
+
+      <button mat-raised-button color="accent" routerLink="/admin/register">
+        Register User
+      </button>
+    </mat-card>
+
+  </div>
+
+</div>

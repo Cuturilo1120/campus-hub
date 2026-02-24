@@ -1,10 +1,20 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [],
+  standalone: true,
+  imports: [
+    RouterLink,
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+  ],
   templateUrl: './admin-dashboard.html',
-  styleUrl: './admin-dashboard.scss',
+  styleUrls: ['./admin-dashboard.scss']
 })
 export class AdminDashboard {
 
