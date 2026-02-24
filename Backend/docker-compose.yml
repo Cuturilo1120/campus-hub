@@ -14,6 +14,12 @@ services:
       - "3307:3306"
     volumes:
       - users_db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   dorm-db:
     image: mysql:8.0
@@ -25,6 +31,12 @@ services:
       - "3308:3306"
     volumes:
       - dorm_db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   nutrition-db:
     image: mysql:8.0
@@ -36,6 +48,12 @@ services:
       - "3309:3306"
     volumes:
       - nutrition_db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
 
   # ───────────── APPLICATIONS ─────────────
@@ -50,7 +68,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
       NUTRITION_SERVICE_URL: http://nutrition-app:8082
     depends_on:
-      - users-db
+      users-db:
+        condition: service_healthy
 
   dorm-app:
     build: ./dorm
@@ -62,7 +81,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
       SERVER_PORT: 8081
     depends_on:
-      - dorm-db
+      dorm-db:
+        condition: service_healthy
 
   nutrition-app:
     build: ./nutritionDepartment
@@ -74,7 +94,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
       SERVER_PORT: 8082
     depends_on:
-      - nutrition-db
+      nutrition-db:
+        condition: service_healthy
 
 volumes:
   users_db_data:
