@@ -34,8 +34,4 @@ public class RoomApplication {
         return dorm != null ? dorm.getName() : null;
     }
 
-    public Long getDormId() {
-        return dorm != null ? dorm.getId() : null;
-    }
-
 }
