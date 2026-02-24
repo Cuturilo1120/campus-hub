@@ -1,0 +1,61 @@
+@if (dormStay$ | async; as dormStay) {
+
+<div class="details-wrapper">
+
+  <mat-card class="details-card">
+
+    <div class="header">
+
+      <div class="avatar">
+        <mat-icon>hotel</mat-icon>
+      </div>
+
+      <div>
+        <h2>Dorm Stay #{{ dormStay.id }}</h2>
+        <p class="subtitle">{{ dormStay.stayStatus }}</p>
+      </div>
+
+    </div>
+
+    <div class="info-grid">
+
+      <div class="info-item">
+        <span class="label">ID</span>
+        <span>{{ dormStay.id }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="label">Student ID</span>
+        <span>{{ dormStay.studentId }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="label">Move In Date</span>
+        <span>{{ dormStay.moveInDate | date }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="label">Move Out Date</span>
+        <span>{{ dormStay.moveOutDate | date }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="label">Status</span>
+        <span class="status-badge">{{ dormStay.stayStatus }}</span>
+      </div>
+
+    </div>
+
+    <div class="actions">
+
+      <button mat-stroked-button (click)="goBack()">
+        Back
+      </button>
+
+    </div>
+
+  </mat-card>
+
+</div>
+
+}
