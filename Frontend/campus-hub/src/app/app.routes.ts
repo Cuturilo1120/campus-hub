@@ -13,6 +13,16 @@ import { RegisterStudent } from './home/pages/register-student/register-student'
 import { StudentDetails } from './home/pages/student-details/student-details';
 import { StudentList } from './home/pages/student-list/student-list';
 import { StudentLayout } from './home/layouts/student-layout/student-layout';
+import { DormList } from './home/pages/dorm/dorm-list/dorm-list';
+import { DormDetails } from './home/pages/dorm/dorm-details/dorm-details';
+import { PavilionList } from './home/pages/dorm/pavilion-list/pavilion-list';
+import { PavilionDetails } from './home/pages/dorm/pavilion-details/pavilion-details';
+import { RoomList } from './home/pages/dorm/room-list/room-list';
+import { RoomDetails } from './home/pages/dorm/room-details/room-details';
+import { RoomApplicationList } from './home/pages/dorm/room-application-list/room-application-list';
+import { RoomApplicationDetails } from './home/pages/dorm/room-application-details/room-application-details';
+import { DormStayList } from './home/pages/dorm/dorm-stay-list/dorm-stay-list';
+import { DormStayDetails } from './home/pages/dorm/dorm-stay-details/dorm-stay-details';
 import { StudentDashboard } from './home/pages/student/student-dashboard/student-dashboard';
 import { MyCard } from './home/pages/student/my-card/my-card';
 import { StudentMenu } from './home/pages/student/student-menu/student-menu';
@@ -48,7 +58,17 @@ export const routes: Routes = [
             { path: '', component: DormDashboard },
             { path: 'register-student', component: RegisterStudent },
             { path: 'students', component: StudentList },
-            { path: 'students/:id', component: StudentDetails }
+            { path: 'students/:id', component: StudentDetails },
+            { path: 'dorms', component: DormList },
+            { path: 'dorms/:id', component: DormDetails },
+            { path: 'pavilions', component: PavilionList },
+            { path: 'pavilions/:id', component: PavilionDetails },
+            { path: 'rooms', component: RoomList },
+            { path: 'rooms/:id', component: RoomDetails },
+            { path: 'room-applications', component: RoomApplicationList },
+            { path: 'room-applications/:id', component: RoomApplicationDetails },
+            { path: 'dorm-stays', component: DormStayList },
+            { path: 'dorm-stays/:id', component: DormStayDetails }
         ]
     },
 

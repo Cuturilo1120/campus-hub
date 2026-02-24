@@ -1,0 +1,51 @@
+@if (room$ | async; as room) {
+
+<div class="details-wrapper">
+
+  <mat-card class="details-card">
+
+    <div class="header">
+
+      <div class="avatar">
+        <mat-icon>meeting_room</mat-icon>
+      </div>
+
+      <div>
+        <h2>Room {{ room.roomNumber }}</h2>
+        <p class="subtitle">Capacity: {{ room.capacity }}</p>
+      </div>
+
+    </div>
+
+    <div class="info-grid">
+
+      <div class="info-item">
+        <span class="label">ID</span>
+        <span>{{ room.id }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="label">Room Number</span>
+        <span>{{ room.roomNumber }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="label">Capacity</span>
+        <span>{{ room.capacity }}</span>
+      </div>
+
+    </div>
+
+    <div class="actions">
+
+      <button mat-stroked-button (click)="goBack()">
+        Back
+      </button>
+
+    </div>
+
+  </mat-card>
+
+</div>
+
+}

@@ -5,17 +5,34 @@
 .sidebar {
   width: 260px;
   padding-top: 1rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
 }
 
 .sidebar-header {
   text-align: center;
   padding: 1.5rem 1rem;
+  color: white;
+}
+
+.sidebar mat-icon {
+  color: white;
+}
+
+.sidebar .mdc-list-item__primary-text {
+  color: white !important;
+}
+
+.sidebar .mat-mdc-list-item {
+  color: white;
 }
 
 .topbar {
   position: sticky;
   top: 0;
   z-index: 1000;
+  background: linear-gradient(135deg, #667eea, #764ba2) !important;
+  color: white;
 }
 
 .toolbar-title {

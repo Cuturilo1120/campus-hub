@@ -1,0 +1,66 @@
+@if (pavilion$ | async; as pavilion) {
+
+<div class="details-wrapper">
+
+  <mat-card class="details-card">
+
+    <div class="header">
+
+      <div class="avatar">
+        <mat-icon>domain</mat-icon>
+      </div>
+
+      <div>
+        <h2>Pavilion {{ pavilion.number }}</h2>
+        <p class="subtitle">{{ pavilion.address }}</p>
+      </div>
+
+    </div>
+
+    <div class="info-grid">
+
+      <div class="info-item">
+        <span class="label">ID</span>
+        <span>{{ pavilion.id }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="label">Number</span>
+        <span>{{ pavilion.number }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="label">Address</span>
+        <span>{{ pavilion.address }}</span>
+      </div>
+
+    </div>
+
+    @if (pavilion.roomList && pavilion.roomList.length > 0) {
+
+      <h3 class="section-title">Rooms</h3>
+
+      <div class="room-list">
+        @for (room of pavilion.roomList; track room.id) {
+          <div class="room-item">
+            <span class="label">Room {{ room.roomNumber }}</span>
+            <span>Capacity: {{ room.capacity }}</span>
+          </div>
+        }
+      </div>
+
+    }
+
+    <div class="actions">
+
+      <button mat-stroked-button (click)="goBack()">
+        Back
+      </button>
+
+    </div>
+
+  </mat-card>
+
+</div>
+
+}

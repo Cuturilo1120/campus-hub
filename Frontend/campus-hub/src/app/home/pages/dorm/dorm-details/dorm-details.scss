@@ -1,0 +1,85 @@
+.details-wrapper {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.details-card {
+  width: 600px;
+  padding: 2rem;
+  border-radius: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: white;
+}
+
+.avatar mat-icon {
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin-top: 0.3rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 0.3rem;
+}
+
+.section-title {
+  margin-bottom: 1rem;
+}
+
+.pavilion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.pavilion-item {
+  display: flex;
+  flex-direction: column;
+  padding: 0.8rem 1rem;
+  background: #f3f4f6;
+  border-radius: 10px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+}

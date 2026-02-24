@@ -1,0 +1,46 @@
+<div class="table-wrapper">
+
+  <h2>Dorm Stays</h2>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let s"> {{ s.id }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="studentId">
+      <th mat-header-cell *matHeaderCellDef> Student ID </th>
+      <td mat-cell *matCellDef="let s"> {{ s.studentId }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="moveInDate">
+      <th mat-header-cell *matHeaderCellDef> Move In </th>
+      <td mat-cell *matCellDef="let s"> {{ s.moveInDate | date }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="moveOutDate">
+      <th mat-header-cell *matHeaderCellDef> Move Out </th>
+      <td mat-cell *matCellDef="let s"> {{ s.moveOutDate | date }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="stayStatus">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let s"> {{ s.stayStatus }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td mat-cell *matCellDef="let s">
+        <button mat-icon-button color="primary" (click)="viewDormStay(s.id)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+</div>

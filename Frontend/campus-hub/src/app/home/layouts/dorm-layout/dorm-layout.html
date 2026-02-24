@@ -23,6 +23,29 @@
         Register Student
       </a>
 
+      @if (role === 'PRINCIPAL') {
+        <a mat-list-item routerLink="/dorm/dorms">
+          <mat-icon matListIcon>apartment</mat-icon>
+          Dorms
+        </a>
+        <a mat-list-item routerLink="/dorm/pavilions">
+          <mat-icon matListIcon>domain</mat-icon>
+          Pavilions
+        </a>
+        <a mat-list-item routerLink="/dorm/rooms">
+          <mat-icon matListIcon>meeting_room</mat-icon>
+          Rooms
+        </a>
+        <a mat-list-item routerLink="/dorm/room-applications">
+          <mat-icon matListIcon>assignment</mat-icon>
+          Room Applications
+        </a>
+        <a mat-list-item routerLink="/dorm/dorm-stays">
+          <mat-icon matListIcon>hotel</mat-icon>
+          Dorm Stays
+        </a>
+      }
+
     </mat-nav-list>
 
   </mat-sidenav>

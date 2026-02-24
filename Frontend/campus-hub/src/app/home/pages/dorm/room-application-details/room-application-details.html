@@ -1,0 +1,56 @@
+@if (application$ | async; as application) {
+
+<div class="details-wrapper">
+
+  <mat-card class="details-card">
+
+    <div class="header">
+
+      <div class="avatar">
+        <mat-icon>assignment</mat-icon>
+      </div>
+
+      <div>
+        <h2>Room Application #{{ application.id }}</h2>
+        <p class="subtitle">{{ application.status }}</p>
+      </div>
+
+    </div>
+
+    <div class="info-grid">
+
+      <div class="info-item">
+        <span class="label">ID</span>
+        <span>{{ application.id }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="label">Student ID</span>
+        <span>{{ application.studentId }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="label">Date of Application</span>
+        <span>{{ application.dateOfApplication | date }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="label">Status</span>
+        <span class="status-badge">{{ application.status }}</span>
+      </div>
+
+    </div>
+
+    <div class="actions">
+
+      <button mat-stroked-button (click)="goBack()">
+        Back
+      </button>
+
+    </div>
+
+  </mat-card>
+
+</div>
+
+}
