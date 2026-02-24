@@ -1,6 +1,7 @@
 package dorm.controller;
 
 import dorm.model.dto.RoomApplicationRequest;
+import dorm.model.entity.DormStay;
 import dorm.model.entity.RoomApplication;
 import dorm.service.RoomApplicationService;
 import lombok.RequiredArgsConstructor;
@@ -48,8 +49,14 @@ public class RoomApplicationController {
         return roomApplicationService.apply(studentId, request.dormId());
     }
 
+    @PatchMapping("/{id}/accept")
+    @PreAuthorize("hasRole('PRINCIPAL')")
+    public DormStay accept(@PathVariable Long id) {
+        return roomApplicationService.accept(id);
+    }
+
     @PatchMapping("/{id}/reject")
-    @PreAuthorize("hasRole('PRINCIPAL') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('PRINCIPAL')")
     public RoomApplication reject(@PathVariable Long id) {
         return roomApplicationService.reject(id);
     }
