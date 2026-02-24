@@ -1,0 +1,31 @@
+<div class="register-wrapper">
+
+  <mat-card class="register-card mat-elevation-z8">
+
+    <h2>Apply for a Room</h2>
+    <p class="subtitle">Select a dormitory to apply to</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Dormitory</mat-label>
+        <mat-select formControlName="dormId">
+          <mat-option *ngFor="let dorm of dorms" [value]="dorm.id">
+            {{ dorm.name }} — {{ dorm.city }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="submit-btn" type="submit" [disabled]="form.invalid">
+        Submit Application
+      </button>
+
+      <button mat-stroked-button type="button" class="submit-btn back-btn" (click)="goBack()">
+        Cancel
+      </button>
+
+    </form>
+
+  </mat-card>
+
+</div>

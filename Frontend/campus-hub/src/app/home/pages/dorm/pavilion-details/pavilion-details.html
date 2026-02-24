@@ -34,6 +34,18 @@
         <span>{{ pavilion.address }}</span>
       </div>
 
+      @if (pavilion.dorm) {
+        <div class="info-item">
+          <span class="label">Dorm</span>
+          <span>{{ pavilion.dorm.name }}</span>
+        </div>
+
+        <div class="info-item">
+          <span class="label">Dorm City</span>
+          <span>{{ pavilion.dorm.city }}</span>
+        </div>
+      }
+
     </div>
 
     @if (pavilion.roomList && pavilion.roomList.length > 0) {

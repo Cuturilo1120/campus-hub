@@ -44,4 +44,8 @@ export class DormList implements OnInit {
   viewDorm(id: number) {
     this.router.navigate(['/dorm/dorms', id]);
   }
+
+  create() {
+    this.router.navigate(['/dorm/dorms/create']);
+  }
 }

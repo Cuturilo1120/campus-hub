@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DormService } from '../../../../../services/dorm-service';
 
 @Component({
-  selector: 'app-pavilion-list',
+  selector: 'app-my-room-applications',
   standalone: true,
   imports: [
     CommonModule,
@@ -15,13 +15,13 @@ import { DormService } from '../../../../../services/dorm-service';
     MatButtonModule,
     MatIconModule
   ],
-  templateUrl: './pavilion-list.html',
-  styleUrl: './pavilion-list.scss'
+  templateUrl: './my-room-applications.html',
+  styleUrl: './my-room-applications.scss'
 })
-export class PavilionList implements OnInit {
+export class MyRoomApplications implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['id', 'number', 'address', 'actions'];
+  displayedColumns: string[] = ['id', 'dormName', 'dateOfApplication', 'status', 'actions'];
 
   constructor(
     private dormService: DormService,
@@ -29,11 +29,11 @@ export class PavilionList implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadPavilions();
+    this.loadApplications();
   }
 
-  loadPavilions() {
-    this.dormService.getAllPavilions().subscribe({
+  loadApplications() {
+    this.dormService.getMyRoomApplications().subscribe({
       next: (data) => {
         this.dataSource.data = data;
       },
@@ -41,11 +41,11 @@ export class PavilionList implements OnInit {
     });
   }
 
-  viewPavilion(id: number) {
-    this.router.navigate(['/dorm/pavilions', id]);
+  viewApplication(id: number) {
+    this.router.navigate(['/student/room-applications', id]);
   }
 
-  create() {
-    this.router.navigate(['/dorm/pavilions/create']);
+  apply() {
+    this.router.navigate(['/student/room-applications/apply']);
   }
 }

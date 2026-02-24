@@ -29,6 +29,11 @@
         <span>{{ dorm.city }}</span>
       </div>
 
+      <div class="info-item">
+        <span class="label">Total Capacity</span>
+        <span>{{ capacity ?? '—' }}</span>
+      </div>
+
     </div>
 
     @if (dorm.pavilions && dorm.pavilions.length > 0) {
