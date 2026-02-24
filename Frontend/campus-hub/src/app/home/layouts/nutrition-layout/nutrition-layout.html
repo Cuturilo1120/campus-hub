@@ -25,6 +25,18 @@
       </a>
     }
 
+    @if (role === 'COOK') {
+      <a mat-list-item routerLink="/nutrition/menu">
+        <mat-icon matListIcon>restaurant_menu</mat-icon>
+        Menu
+      </a>
+
+      <a mat-list-item routerLink="/nutrition/consume-meal">
+        <mat-icon matListIcon>restaurant</mat-icon>
+        Consume Meal
+      </a>
+    }
+
     </mat-nav-list>
 
   </mat-sidenav>

@@ -16,6 +16,8 @@ import { StudentLayout } from './home/layouts/student-layout/student-layout';
 import { StudentDashboard } from './home/pages/student/student-dashboard/student-dashboard';
 import { MyCard } from './home/pages/student/my-card/my-card';
 import { StudentMenu } from './home/pages/student/student-menu/student-menu';
+import { CookMenu } from './home/pages/nutrition/cook-menu/cook-menu';
+import { ConsumeMeal } from './home/pages/nutrition/consume-meal/consume-meal';
 
 export const routes: Routes = [
     { path: '', component: Login },
@@ -37,7 +39,9 @@ export const routes: Routes = [
             { path: '', component: NutritionDashboard } ,
             { path: 'register-student', component: RegisterStudent },
             { path: 'students', component: StudentList },
-            { path: 'students/:id', component: StudentDetails }
+            { path: 'students/:id', component: StudentDetails },
+            { path: 'menu', component: CookMenu },
+            { path: 'consume-meal', component: ConsumeMeal }
         ]
     },
 

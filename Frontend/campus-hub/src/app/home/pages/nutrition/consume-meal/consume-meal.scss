@@ -1,0 +1,25 @@
+.consume-wrapper {
+  max-width: 500px;
+  margin: 3rem auto;
+  text-align: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.success {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.error {
+  color: #c62828;
+  font-weight: 600;
+}

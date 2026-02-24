@@ -1,0 +1,40 @@
+<div class="consume-wrapper">
+
+  <h2>Consume Student Meal</h2>
+
+  <div class="form-container">
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Card ID</mat-label>
+      <input matInput type="number" [(ngModel)]="cardId">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Meal Type</mat-label>
+      <mat-select [(ngModel)]="mealType">
+        <mat-option value="BREAKFAST">Breakfast</mat-option>
+        <mat-option value="LUNCH">Lunch</mat-option>
+        <mat-option value="DINNER">Dinner</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="consumeMeal()"
+      [disabled]="isLoading"
+    >
+      {{ isLoading ? 'Processing...' : 'Consume Meal' }}
+    </button>
+
+    @if (message) {
+      <p class="success">{{ message }}</p>
+    }
+
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+
+  </div>
+
+</div>

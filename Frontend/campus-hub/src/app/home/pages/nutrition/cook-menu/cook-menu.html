@@ -1,0 +1,61 @@
+<div class="menu-wrapper">
+
+  <h2>Cook Menu Management</h2>
+
+  @if (isLoading) {
+    <p>Loading...</p>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="menu-grid">
+
+    <mat-card>
+      <h3>Budget Prices</h3>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Breakfast</mat-label>
+        <input matInput type="number" formControlName="breakfastPriceBudget">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Lunch</mat-label>
+        <input matInput type="number" formControlName="lunchPriceBudget">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Dinner</mat-label>
+        <input matInput type="number" formControlName="dinnerPriceBudget">
+      </mat-form-field>
+    </mat-card>
+
+    <mat-card>
+      <h3>Self Finance Prices</h3>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Breakfast</mat-label>
+        <input matInput type="number" formControlName="breakfastPriceSelfFinance">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Lunch</mat-label>
+        <input matInput type="number" formControlName="lunchPriceSelfFinance">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Dinner</mat-label>
+        <input matInput type="number" formControlName="dinnerPriceSelfFinance">
+      </mat-form-field>
+    </mat-card>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit">
+        Save Changes
+      </button>
+    </div>
+
+  </form>
+
+  @if (message) {
+    <p class="message">{{ message }}</p>
+  }
+
+</div>

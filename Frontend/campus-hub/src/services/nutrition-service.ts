@@ -87,7 +87,37 @@ export class NutritionService {
       Authorization: `Bearer ${token}`
     });
 
-    return this.http.post(`${this.baseUrl}/meals/buy`, { mealType } , { headers });
+    return this.http.post(`${this.baseUrl}/meals/buy`, { mealType }, { headers });
   }
-  
+
+  getCookMenu() {
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.get(`${this.baseUrl}/menu`, { headers });
+  }
+
+  updateMenu(payload: any) {
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.patch(`${this.baseUrl}/menu`,  payload, { headers });
+  }
+
+  consumeMeal(cardId: number, mealType: 'BREAKFAST' | 'LUNCH' | 'DINNER') {
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.patch(`${this.baseUrl}/meals/${cardId}/consume`, { mealType }, { headers });
+  }
+
 }
