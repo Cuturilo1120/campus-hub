@@ -19,6 +19,9 @@ import { PavilionList } from './home/pages/dorm/pavilion-list/pavilion-list';
 import { PavilionDetails } from './home/pages/dorm/pavilion-details/pavilion-details';
 import { RoomList } from './home/pages/dorm/room-list/room-list';
 import { RoomDetails } from './home/pages/dorm/room-details/room-details';
+import { DormCreate } from './home/pages/dorm/dorm-create/dorm-create';
+import { PavilionCreate } from './home/pages/dorm/pavilion-create/pavilion-create';
+import { RoomCreate } from './home/pages/dorm/room-create/room-create';
 import { RoomApplicationList } from './home/pages/dorm/room-application-list/room-application-list';
 import { RoomApplicationDetails } from './home/pages/dorm/room-application-details/room-application-details';
 import { DormStayList } from './home/pages/dorm/dorm-stay-list/dorm-stay-list';
@@ -26,6 +29,8 @@ import { DormStayDetails } from './home/pages/dorm/dorm-stay-details/dorm-stay-d
 import { StudentDashboard } from './home/pages/student/student-dashboard/student-dashboard';
 import { MyCard } from './home/pages/student/my-card/my-card';
 import { StudentMenu } from './home/pages/student/student-menu/student-menu';
+import { MyRoomApplications } from './home/pages/student/my-room-applications/my-room-applications';
+import { RoomApplicationApply } from './home/pages/student/room-application-apply/room-application-apply';
 
 export const routes: Routes = [
     { path: '', component: Login },
@@ -60,10 +65,13 @@ export const routes: Routes = [
             { path: 'students', component: StudentList },
             { path: 'students/:id', component: StudentDetails },
             { path: 'dorms', component: DormList },
+            { path: 'dorms/create', component: DormCreate },
             { path: 'dorms/:id', component: DormDetails },
             { path: 'pavilions', component: PavilionList },
+            { path: 'pavilions/create', component: PavilionCreate },
             { path: 'pavilions/:id', component: PavilionDetails },
             { path: 'rooms', component: RoomList },
+            { path: 'rooms/create', component: RoomCreate },
             { path: 'rooms/:id', component: RoomDetails },
             { path: 'room-applications', component: RoomApplicationList },
             { path: 'room-applications/:id', component: RoomApplicationDetails },
@@ -79,6 +87,8 @@ export const routes: Routes = [
             { path: '', component: StudentDashboard },
             { path: 'my-card', component: MyCard },
             { path: 'menu', component: StudentMenu },
+            { path: 'room-applications', component: MyRoomApplications },
+            { path: 'room-applications/apply', component: RoomApplicationApply },
         ]
     }
 ];

@@ -44,4 +44,8 @@ export class RoomList implements OnInit {
   viewRoom(id: number) {
     this.router.navigate(['/dorm/rooms', id]);
   }
+
+  create() {
+    this.router.navigate(['/dorm/rooms/create']);
+  }
 }

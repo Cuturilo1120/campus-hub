@@ -22,6 +22,7 @@ import { DormService } from '../../../../../services/dorm-service';
 export class DormDetails implements OnInit {
 
   dorm$!: Observable<any>;
+  capacity: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,6 +35,10 @@ export class DormDetails implements OnInit {
       const id = Number(params.get('id'));
       if (id) {
         this.dorm$ = this.dormService.getDormById(id);
+        this.dormService.getDormCapacity(id).subscribe({
+          next: (cap) => this.capacity = cap,
+          error: () => this.capacity = null
+        });
       }
     });
   }

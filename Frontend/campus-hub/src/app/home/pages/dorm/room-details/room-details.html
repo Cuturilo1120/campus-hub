@@ -34,6 +34,18 @@
         <span>{{ room.capacity }}</span>
       </div>
 
+      @if (room.pavilion) {
+        <div class="info-item">
+          <span class="label">Pavilion</span>
+          <span>Pavilion {{ room.pavilion.number }}</span>
+        </div>
+
+        <div class="info-item">
+          <span class="label">Pavilion Address</span>
+          <span>{{ room.pavilion.address }}</span>
+        </div>
+      }
+
     </div>
 
     <div class="actions">

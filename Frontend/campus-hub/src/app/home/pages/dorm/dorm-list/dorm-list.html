@@ -1,6 +1,12 @@
 <div class="table-wrapper">
 
-  <h2>Dorms</h2>
+  <div class="list-header">
+    <h2>Dorms</h2>
+    <button mat-raised-button color="primary" (click)="create()">
+      <mat-icon>add</mat-icon>
+      Add Dorm
+    </button>
+  </div>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width">
 
