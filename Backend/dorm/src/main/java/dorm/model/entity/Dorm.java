@@ -1,5 +1,6 @@
 package dorm.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class Dorm {
     private String city;
 
     @OneToMany(mappedBy = "dorm")
-    @JsonManagedReference("dorm-pavilion")
+    @JsonIgnoreProperties({"dorm"})
     private List<Pavilion> pavilions;
 
     @OneToMany(mappedBy = "dorm")

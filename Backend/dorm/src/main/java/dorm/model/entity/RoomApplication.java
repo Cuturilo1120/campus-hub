@@ -30,4 +30,12 @@ public class RoomApplication {
     @JsonBackReference("dorm-application")
     private Dorm dorm;
 
+    public String getDormName() {
+        return dorm != null ? dorm.getName() : null;
+    }
+
+    public Long getDormId() {
+        return dorm != null ? dorm.getId() : null;
+    }
+
 }
