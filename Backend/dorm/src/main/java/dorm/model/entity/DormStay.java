@@ -33,6 +33,4 @@ public class DormStay {
     @JsonBackReference("room-dormstay")
     private Room room;
 
-    private Long emplyeeId;
-
 }

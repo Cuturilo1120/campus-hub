@@ -1,0 +1,107 @@
+### =============================================
+### SETUP — Login as principal (sets authToken)
+### =============================================
+
+### Login as principal
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "principal",
+  "password": "principal123"
+}
+
+> {%
+  client.global.set("authToken", response.body.token);
+%}
+
+###
+
+### Login as student (sets studentToken)
+POST http://localhost:8080/api/auth/students/login
+Content-Type: application/json
+
+{
+  "username": "marko.markovic",
+  "password": "student123"
+}
+
+> {%
+  client.global.set("studentToken", response.body.token);
+%}
+
+
+
+### =============================================
+### PREREQUISITE — Student applies for a dorm
+### (Run once to create an IN_PROGRESS application)
+### =============================================
+
+### Student applies for dorm (sets roomApplicationId)
+POST http://localhost:8081/api/roomApplications/apply
+Content-Type: application/json
+Authorization: Bearer {{studentToken}}
+
+{
+  "dormId": 1
+}
+
+> {%
+  client.global.set("roomApplicationId", response.body.id);
+%}
+
+
+
+### =============================================
+### ACCEPT APPLICATION (PRINCIPAL only)
+### =============================================
+
+### Accept an IN_PROGRESS application — happy path (expects 200 with DormStay)
+PATCH http://localhost:8081/api/roomApplications/{{roomApplicationId}}/accept
+Authorization: Bearer {{authToken}}
+
+> {%
+  client.global.set("dormStayId", response.body.id);
+%}
+
+###
+
+### Verify application is now ACCEPTED
+GET http://localhost:8081/api/roomApplications/{{roomApplicationId}}
+Authorization: Bearer {{authToken}}
+
+###
+
+### Verify DormStay was created
+GET http://localhost:8081/api/dormStays/{{dormStayId}}
+Authorization: Bearer {{authToken}}
+
+###
+
+### Verify room capacity decreased by 1
+GET http://localhost:8081/api/rooms/1
+Authorization: Bearer {{authToken}}
+
+###
+
+### Accept — non-existent application (expects 404)
+PATCH http://localhost:8081/api/roomApplications/9999/accept
+Authorization: Bearer {{authToken}}
+
+###
+
+### Accept — already accepted application (expects 400)
+PATCH http://localhost:8081/api/roomApplications/{{roomApplicationId}}/accept
+Authorization: Bearer {{authToken}}
+
+###
+
+### Accept — as student, not principal (expects 403)
+PATCH http://localhost:8081/api/roomApplications/{{roomApplicationId}}/accept
+Authorization: Bearer {{studentToken}}
+
+###
+
+### Accept — no room capacity (expects 400)
+### NOTE: To test this, manually set capacity=0 for all rooms in the dorm via DB,
+### then create a new IN_PROGRESS application and try to accept it.

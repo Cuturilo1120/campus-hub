@@ -2,13 +2,19 @@ package dorm.service;
 
 import dorm.model.entity.ApplicationStatus;
 import dorm.model.entity.Dorm;
+import dorm.model.entity.DormStay;
+import dorm.model.entity.Room;
 import dorm.model.entity.RoomApplication;
+import dorm.model.entity.StayStatus;
 import dorm.repository.DormRepository;
+import dorm.repository.DormStayRepository;
 import dorm.repository.RoomApplicationRepository;
+import dorm.repository.RoomRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +26,12 @@ public class RoomApplicationService {
 
     @Autowired
     private DormRepository dormRepository;
+
+    @Autowired
+    private DormStayRepository dormStayRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
 
     public List<RoomApplication> getAllRoomApplications() {
         return roomApplicationRepository.findAll();
@@ -59,6 +71,42 @@ public class RoomApplicationService {
             throw new IllegalArgumentException("Access denied");
         }
         return application;
+    }
+
+    public DormStay accept(Long id) {
+        RoomApplication application = roomApplicationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("RoomApplication not found"));
+        if (application.getStatus() != ApplicationStatus.IN_PROGRESS) {
+            throw new IllegalArgumentException("Only IN_PROGRESS applications can be accepted");
+        }
+
+        Dorm dorm = application.getDorm();
+        Room availableRoom = dorm.getPavilions().stream()
+                .flatMap(p -> p.getRoomList().stream())
+                .filter(r -> r.getCapacity() != null && r.getCapacity() > 0)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No available rooms in this dorm"));
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, 1);
+        Date moveInDate = cal.getTime();
+        cal.add(Calendar.YEAR, 1);
+        Date moveOutDate = cal.getTime();
+
+        DormStay dormStay = new DormStay();
+        dormStay.setStudentId(application.getStudentId());
+        dormStay.setMoveInDate(moveInDate);
+        dormStay.setMoveOutDate(moveOutDate);
+        dormStay.setStayStatus(StayStatus.WAITING);
+        dormStay.setRoom(availableRoom);
+
+        availableRoom.setCapacity(availableRoom.getCapacity() - 1);
+        roomRepository.save(availableRoom);
+
+        application.setStatus(ApplicationStatus.ACCEPTED);
+        roomApplicationRepository.save(application);
+
+        return dormStayRepository.save(dormStay);
     }
 
     public RoomApplication apply(Long studentId, Long dormId) {
