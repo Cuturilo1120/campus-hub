@@ -12,6 +12,10 @@ import { UserDetails } from './home/pages/admin/user-details/user-details';
 import { RegisterStudent } from './home/pages/register-student/register-student';
 import { StudentDetails } from './home/pages/student-details/student-details';
 import { StudentList } from './home/pages/student-list/student-list';
+import { StudentLayout } from './home/layouts/student-layout/student-layout';
+import { StudentDashboard } from './home/pages/student/student-dashboard/student-dashboard';
+import { MyCard } from './home/pages/student/my-card/my-card';
+import { StudentMenu } from './home/pages/student/student-menu/student-menu';
 
 export const routes: Routes = [
     { path: '', component: Login },
@@ -45,6 +49,16 @@ export const routes: Routes = [
             { path: 'register-student', component: RegisterStudent },
             { path: 'students', component: StudentList },
             { path: 'students/:id', component: StudentDetails }
+        ]
+    },
+
+    {
+        path: 'student',
+        component: StudentLayout,
+        children: [
+            { path: '', component: StudentDashboard },
+            { path: 'my-card', component: MyCard },
+            { path: 'menu', component: StudentMenu },
         ]
     }
 ];

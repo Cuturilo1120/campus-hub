@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../../../../services/users-service';
@@ -33,7 +33,8 @@ export class StudentDetails implements OnInit {
     private usersService: UsersService,
     private router: Router,
     private location: Location,
-    private nutritionService: NutritionService
+    private nutritionService: NutritionService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -43,30 +44,41 @@ export class StudentDetails implements OnInit {
       if (id) {
         this.studentId = id;
         this.student$ = this.usersService.getStudentById(id);
-        this.loadCard();
+        this.loadCard(id);
       }
     });
   }
 
-  loadCard() {
-    this.nutritionService.getCardByStudent().subscribe({
-      next: card => this.card = card,
-      error: () => this.card = null
-    });
+ loadCard(studentId: number) {
+    this.nutritionService.getCardByStudent(studentId).subscribe({
+      next: card => {
+        this.card = card;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.card = null;
+        this.cdr.detectChanges();
+      }
+    }); 
   }
 
   createCard() {
     if (!confirm('Create card for this student?')) return;
 
+    this.isLoading = true;
+
     this.nutritionService.createCard(this.studentId).subscribe({
-      next: () => this.loadCard(),
-      error: () => alert('Card creation failed')
+      next: () => {
+        this.loadCard(this.studentId);
+      },
+      error: () => {},
+      complete: () => this.isLoading = false
     });
   }
 
   renewCard() {
     this.nutritionService.renewCard(this.card.id).subscribe({
-      next: () => this.loadCard(),
+      next: () => this.loadCard(this.studentId),
       error: () => alert('Renew failed')
     });
   }
@@ -75,7 +87,7 @@ export class StudentDetails implements OnInit {
     if (!confirm('Delete card?')) return;
 
     this.nutritionService.deleteCard(this.card.id).subscribe({
-      next: () => this.loadCard(),
+      next: () => this.loadCard(this.studentId),
       error: () => alert('Delete failed')
     });
   }
@@ -89,7 +101,7 @@ export class StudentDetails implements OnInit {
       this.card.id,
       Number(amount)
     ).subscribe({
-      next: () => this.loadCard(),
+      next: () => this.loadCard(this.studentId),
       error: () => alert('Add funds failed')
     });
   }

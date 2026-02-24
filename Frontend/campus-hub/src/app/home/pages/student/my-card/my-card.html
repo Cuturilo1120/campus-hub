@@ -1,0 +1,33 @@
+<div class="card-wrapper">
+
+  <h2>My Student Card</h2>
+
+  @if (isLoading) {
+    <p>Loading...</p>
+  }
+
+  @if (!isLoading && !card) {
+    <p>You do not have a card assigned.</p>
+  }
+
+  @if (!isLoading && card) {
+
+    <mat-card class="card-box">
+
+      <div class="balance">
+        {{ card.balance | currency: 'RSD ':'symbol':'1.2-2' }}
+      </div>
+
+      <div class="expiration">
+        Expires: {{ card.expirationDate | date }}
+      </div>
+
+      <button mat-raised-button color="primary" (click)="addFunds()">
+        Add Funds
+      </button>
+
+    </mat-card>
+
+  }
+
+</div>

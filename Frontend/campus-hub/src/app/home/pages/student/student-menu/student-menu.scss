@@ -1,0 +1,23 @@
+.menu-wrapper {
+  max-width: 900px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.menu-grid {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+mat-card {
+  width: 220px;
+  padding: 1.5rem;
+  border-radius: 16px;
+}
+
+.message {
+  margin-top: 2rem;
+  font-weight: 500;
+}

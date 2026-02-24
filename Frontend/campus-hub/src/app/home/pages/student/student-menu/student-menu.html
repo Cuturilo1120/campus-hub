@@ -1,0 +1,47 @@
+<div class="menu-wrapper">
+
+  <h2>Student Menu</h2>
+
+  @if (isLoading) {
+    <p>Loading menu...</p>
+  }
+
+  @if (!isLoading && menu) {
+
+    <div class="menu-grid">
+
+      <mat-card>
+        <h3>Breakfast</h3>
+        <p>{{ menu.breakfastPrice | currency:'RSD ':'symbol':'1.2-2' }}</p>
+        <button mat-raised-button color="primary"
+                (click)="buyMeal('BREAKFAST')">
+          Buy
+        </button>
+      </mat-card>
+
+      <mat-card>
+        <h3>Lunch</h3>
+        <p>{{ menu.lunchPrice | currency:'RSD ':'symbol':'1.2-2' }}</p>
+        <button mat-raised-button color="primary"
+                (click)="buyMeal('LUNCH')">
+          Buy
+        </button>
+      </mat-card>
+
+      <mat-card>
+        <h3>Dinner</h3>
+        <p>{{ menu.dinnerPrice | currency:'RSD ':'symbol':'1.2-2' }}</p>
+        <button mat-raised-button color="primary"
+                (click)="buyMeal('DINNER')">
+          Buy
+        </button>
+      </mat-card>
+
+    </div>
+  }
+
+  @if (message) {
+    <p class="message">{{ message }}</p>
+  }
+
+</div>

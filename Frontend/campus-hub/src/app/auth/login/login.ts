@@ -67,7 +67,7 @@ export class Login {
           this.router.navigate(['/dorm']);
         }
         else {
-          this.router.navigate(['/']);
+          this.router.navigate(['/student']);
         }
       },
       error: () => {
